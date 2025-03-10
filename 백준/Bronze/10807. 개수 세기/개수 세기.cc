@@ -1,3 +1,24 @@
-#include <iostream>
-#define f for(i=0; i<n; i++)
-int main(){int n,v,i;int arr[100];int cnt=0;std::cin>>n;f{std::cin>>arr[i];}std::cin>>v;f{if(arr[i]==v)cnt++;}std::cout<<cnt;}
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int n;
+    cin>>n;
+    int arr[n];
+    for(int i=0; i<n; i++) {
+        cin>>arr[i];
+    }
+    int v;
+    cin>>v;
+
+    int cnt=0;
+    for(int i=0; i<n; i++) {
+        if(arr[i]==v) {
+            cnt++;
+        }
+    }
+    cout<<cnt;
+}
