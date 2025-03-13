@@ -1,32 +1,27 @@
-#include <iostream>
-#include <algorithm>
-#include <map>
-
+#include <bits/stdc++.h>
 using namespace std;
 
-int main()
-{
-	ios::sync_with_stdio(false); cin.tie(nullptr);
+int n,m;
 
-	map<int, int> m;
-	int N, M, n;
-	cin >> N;
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+    
+    cin>>n;
 
-	while (N--)
-	{
-		cin >> n;
-		m[n]++;
-	}
+    int a[n];
+    for(int i=0; i<n; i++) {
+        cin>>a[i];
+    }
 
-	cin >> M;
-	while (M--)
-	{
-		cin >> n;
-		auto it = m.find(n);
+    sort(a,a+n);
 
-		if (it != m.end())
-			cout << it->second << ' ';
-		else
-			cout << "0" << ' ';
-	}
+    cin>>m;
+
+    for(int i=0; i<m; i++) {
+        int x;
+        cin>>x;
+
+        cout<<upper_bound(a,a+n,x)-lower_bound(a,a+n,x)<<" ";
+    }
 }
