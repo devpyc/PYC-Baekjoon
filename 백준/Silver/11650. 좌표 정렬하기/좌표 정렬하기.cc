@@ -1,33 +1,21 @@
-#include <iostream>
-#include <algorithm>
+#include <bits/stdc++.h>
 using namespace std;
-
-class coordinate {
-public:
-	int x;
-	int y;
-};
-bool cmp(coordinate a, coordinate b) {
-	if (a.x == b.x) {         
-		return a.y < b.y;
-	}
-	else {
-		return a.x < b.x;
-	}
-}
-coordinate* c = new coordinate[100000];
 int main() {
-	int N;
-	int numx, numy;
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
 
-	cin >> N;
-	for (int i = 0; i < N; i++) {
-		cin >> c[i].x >> c[i].y;
-	}
-	stable_sort(c, c + N, cmp);
+    int n;
+    cin>>n;
 
-	for (int i = 0; i < N; i++) {
-		cout << c[i].x << " " << c[i].y << "\n";
-	}
-	return 0;
+    vector<pair<int,int>>arr;
+    for(int i=0; i<n; i++) {
+        int x,y;
+        cin>>x>>y;
+        arr.push_back({x,y});
+    }
+    sort(arr.begin(),arr.end());
+
+    for(int i=0; i<arr.size(); i++) {
+        cout<<arr[i].first<<" "<<arr[i].second<<"\n";
+    }
 }
