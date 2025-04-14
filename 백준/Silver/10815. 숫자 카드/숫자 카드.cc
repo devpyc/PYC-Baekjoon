@@ -1,35 +1,22 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-bool binarySearch(const vector<int>& cards, int target) {
-    int low = 0, high = cards.size() - 1;
-    while (low <= high) {
-        int mid = low + (high - low) / 2;
-        if (cards[mid] == target) return true;
-        else if (cards[mid] < target) low = mid + 1;
-        else high = mid - 1;
-    }
-    return false;
-}
-
 int main() {
-    ios::sync_with_stdio(false);
+    ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    int N, M;
-    cin >> N;
-    vector<int> cards(N);
-    for (int i = 0; i < N; i++) {
-        cin >> cards[i];
+    int n;
+    cin>>n;
+    int arr[n];
+    for(int i=0; i<n; i++) {
+        cin>>arr[i];
     }
-
-    sort(cards.begin(), cards.end());
-
-    cin >> M;
-    for (int i = 0; i < M; i++) {
-        int num;
-        cin >> num;
-        cout << binarySearch(cards, num) << " ";
+    sort(arr,arr+n);
+    int m;
+    cin>>m;
+    for(int i=0; i<m; i++) {
+        int x;
+        cin>>x;
+        cout<<binary_search(arr,arr+n,x)<<" ";
     }
-    return 0;
 }
