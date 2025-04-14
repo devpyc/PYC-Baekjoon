@@ -14,7 +14,9 @@ int main() {
         arr.push_back({a,{b,c}});
     }
     sort(arr.begin(),arr.end());
+
     for(int i=0; i<n; i++) {
-        cout<<arr[i].first<<" "<<arr[i].second.first<<" "<<arr[i].second.second<<"\n";
+        cout<<arr[i].first<<" "<<arr[i].second.first<<" "<<arr[i].second.second;
+        cout<<"\n";
     }
 }
