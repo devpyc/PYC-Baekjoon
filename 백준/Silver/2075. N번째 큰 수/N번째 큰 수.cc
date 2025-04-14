@@ -6,29 +6,11 @@ int main() {
     cin.tie(nullptr);
 
     int n;
-    cin >> n;
-
-    priority_queue<int, vector<int>, greater<int>> pq;
-
-    for(int i = 0; i < n; i++) {
-        int x;
-        cin >> x;
-        pq.push(x);
+    cin>>n;
+    int arr[n*n];
+    for(int i=0; i<n*n; i++) {
+        cin>>arr[i];
     }
-
-    for(int i = 1; i < n; i++) {
-        for(int j = 0; j < n; j++) {
-            int x;
-            cin >> x;
-
-            if(x > pq.top()) {
-                pq.pop();
-                pq.push(x);
-            }
-        }
-    }
-
-    cout << pq.top() << '\n';
-
-    return 0;
+    sort(arr,arr+n*n);
+    cout<<arr[n*n-n];
 }
