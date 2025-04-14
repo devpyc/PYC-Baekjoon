@@ -4,24 +4,17 @@ using namespace std;
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
-    
-    int N;
-    cin >> N;
-    
-    vector<double> scores;
-    double score;
-    
-    for(int i = 0; i < N; i++) {
-        cin >> score;
-        scores.push_back(score);
+
+    int n;
+    cin>>n;
+    double arr[n];
+    for(int i=0; i<n; i++) {
+        cin>>arr[i];
     }
-    
-    sort(scores.begin(), scores.end());
-    
-    for(int i = 0; i < 7; i++) {
-        cout.precision(3);
-        cout << fixed << scores[i] << "\n";
+    sort(arr,arr+n);
+    cout.precision(3);
+    cout<<fixed;
+    for(int i=0; i<7; i++) {
+        cout<<arr[i]<<"\n";
     }
-    
-    return 0;
 }
