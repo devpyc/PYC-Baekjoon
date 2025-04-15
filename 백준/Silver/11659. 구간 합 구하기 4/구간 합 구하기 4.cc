@@ -1,24 +1,21 @@
-#include <iostream>
+#include <bits/stdc++.h>
 using namespace std;
 
-int main()
-{
+int main() {
     ios_base::sync_with_stdio(false);
-    cin.tie(0);
-    cout.tie(0);
+    cin.tie(nullptr);
 
-    int suNo, quizNo;
-    cin >> suNo>>quizNo;
-    int S[100001]={};
-    
-    for(int i = 1; i <= suNo; i++){
-        int temp;
-        cin>>temp;
-        S[i] = S[i-1] + temp;
+    int n,m;
+    cin>>n>>m;
+    int ans[100001]={0,};
+    for(int i=1; i<=n; i++) {
+        int x;
+        cin>>x;
+        ans[i]=ans[i-1]+x;
     }
-    for(int i = 0; i<quizNo; i++){
-        int start, end;
-        cin>>start>>end;
-        cout<<S[end]-S[start-1]<<"\n";
+    while(m--) {
+        int a,b;
+        cin>>a>>b;
+        cout<<ans[b]-ans[a-1]<<"\n";
     }
 }
