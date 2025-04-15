@@ -1,24 +1,25 @@
 #include <bits/stdc++.h>
-
 using namespace std;
 
 int main() {
-    int n, k;
-    cin >> n >> k;
-    vector<int> v;
-    for (int i = 1; i <= n; i++) {
-        v.push_back(i);
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int n,k;
+    cin>>n>>k;
+    queue<int>q;
+    for(int i=0; i<n; i++) {
+        q.push(i+1);
     }
-    cout << "<";
-    int idx = 0;
-    while (!v.empty()) {
-        idx = (idx + k - 1) % v.size();
-        cout << v[idx];
-        v.erase(v.begin() + idx);
-        if (!v.empty()) {
-            cout << ", ";
+    cout<<"<";
+    while(!q.empty()) {
+        for(int i=1; i<k; i++) {
+            q.push(q.front());
+            q.pop();
         }
+        cout<<q.front();
+        if(q.size()!=1)cout<<", ";
+        q.pop();
     }
-    cout << ">";
-    return 0;
+    cout<<">";
 }
