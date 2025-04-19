@@ -1,5 +1,4 @@
 #include <bits/stdc++.h>
-#define endl "\n"
 using namespace std;
 
 int main() {
@@ -9,20 +8,19 @@ int main() {
     int n;
     cin >> n;
 
-    set<string> s;
+    set<string> arr;
 
     for (int i = 0; i < n; i++) {
-        string name, stat;
-        cin >> name >> stat;
+        string s1, s2;
+        cin >> s1 >> s2;
 
-        if (stat == "enter") {
-            s.insert(name);
-        } else if (stat == "leave") {
-            s.erase(name);
+        if (s2 == "enter") {
+            arr.insert(s1);
+        } else if (s2 == "leave") {
+            arr.erase(s1);
         }
     }
-    for (auto it = s.rbegin(); it != s.rend(); ++it) {
-        cout << *it << endl;
+    for (auto it = arr.rbegin(); it != arr.rend(); ++it) {
+        cout<<*it<<"\n";
     }
-    return 0;
 }
