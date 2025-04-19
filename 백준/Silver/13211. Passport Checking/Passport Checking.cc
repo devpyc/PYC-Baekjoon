@@ -16,7 +16,6 @@ int main() {
 
     int m;
     cin>>m;
-
     int cnt=0;
     for(int i=0; i<m; i++) {
         string s;
