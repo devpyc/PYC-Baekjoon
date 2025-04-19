@@ -1,22 +1,21 @@
-#include <iostream>
+#include <bits/stdc++.h>
+#define ll long long
 using namespace std;
 
-int gcd(int a, int b) {
-    int c = a % b;
-    while (c != 0) {
-        a = b;
-        b = c;
-        c = a % b;
-    }
-    return b;
+ll gcd(ll a, ll b) {
+    if(b==0) return a;
+    return gcd(b,a%b);
 }
-int main()
-{
-    ios_base::sync_with_stdio(false);
-    cin.tie(0);
 
-    unsigned long long a;
-    unsigned long long b;
+ll lcm(ll a, ll b) {
+    return a*b/gcd(a,b);
+}
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    ll a,b;
     cin>>a>>b;
-    cout<<(unsigned long long)(a * b) / gcd(a, b)<<"\n";
+
+    cout<<lcm(a,b);
 }
