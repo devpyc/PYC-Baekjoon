@@ -1,30 +1,23 @@
 #include <bits/stdc++.h>
-
 using namespace std;
 
 int main() {
-    int N;
-    cin >> N;
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
 
-    vector<int> scores(N);
-    int maxScore = 0;
-    
-    for (int i = 0; i < N; i++) {
-        cin >> scores[i];
-        if (scores[i] > maxScore) {
-            maxScore = scores[i];
-        }
+    int n;
+    cin>>n;
+    double arr[n];
+    for(int i=0; i<n; i++) {
+        cin>>arr[i];
     }
+    sort(arr,arr+n);
 
-    double newAverage = 0.0;
-    for (int i = 0; i < N; i++) {
-        newAverage += static_cast<double>(scores[i]) / maxScore * 100;
+    double ans=0;
+    for(int i=0; i<n; i++) {
+        ans+=(arr[i]/arr[n-1])*100;
     }
-    newAverage /= N;
-
-    cout << fixed;
-    cout.precision(9);
-    cout<<newAverage << endl;
-
-    return 0;
+    cout.precision(10);
+    cout<<fixed;
+    cout<<ans/n;
 }
