@@ -1,6 +1,5 @@
-#include <iostream>
-#include <queue>
-
+#include <bits/stdc++.h>
+#define ll long long
 using namespace std;
 
 int main() {
@@ -8,25 +7,19 @@ int main() {
     cin.tie(nullptr);
 
     int n;
-    cin >> n;
-
-    priority_queue<int, vector<int>, greater<int>> minHeap;
-
-    while (n--) {
+    cin>>n;
+    priority_queue<int, vector<int>, greater<int>>pq;
+    for(int i=0; i<n; i++) {
         int x;
-        cin >> x;
-
-        if (x == 0) {
-            if (minHeap.empty()) {
-                cout << "0\n";
-            } else {
-                cout << minHeap.top() << "\n";
-                minHeap.pop();
+        cin>>x;
+        if(x==0) {
+            if(pq.empty()) cout<<0<<"\n";
+            else {
+                cout<<pq.top()<<"\n";
+                pq.pop();
             }
-        } else {
-            minHeap.push(x);
+        }else {
+            pq.push(x);
         }
     }
-
-    return 0;
 }
