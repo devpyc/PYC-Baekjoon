@@ -1,36 +1,29 @@
-#include <iostream>
-#include <vector>
-#include <algorithm>
-#include <map>
-
+#include <bits/stdc++.h>
+#define MOD 10007
 using namespace std;
 
 int main() {
     ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
+    cin.tie(nullptr);
 
     int n;
-    cin >> n;
+    cin>>n;
 
-    vector<int> arr(n);
-    for (int i = 0; i < n; i++) {
-        cin >> arr[i];
+    vector<int>arr(n);
+    for(int i=0; i<n; i++) {
+        cin>>arr[i];
     }
 
-    // 중복 제거를 위해 set을 사용
-    vector<int> sortedArr = arr;
-    sort(sortedArr.begin(), sortedArr.end());
-    sortedArr.erase(unique(sortedArr.begin(), sortedArr.end()), sortedArr.end());
+    vector<int> arrs = arr;
+    sort(arrs.begin(), arrs.end());
+    arrs.erase(unique(arrs.begin(), arrs.end()), arrs.end());
 
-    // 각 수의 압축된 좌표를 저장할 맵
-    map<int, int> compressionMap;
-    for (int i = 0; i < sortedArr.size(); i++) {
-        compressionMap[sortedArr[i]] = i;
-    }
+    map<int,int>cmp;
 
-    // 각 수의 압축된 좌표를 출력
-    for (int i = 0; i < n; i++) {
-        cout << compressionMap[arr[i]] << " ";
+    for(int i=0; i<arrs.size(); i++) {
+        cmp[arrs[i]]=i;
     }
-    return 0;
+    for(int i=0; i<n; i++) {
+        cout<<cmp[arr[i]]<<" ";
+    }
 }
