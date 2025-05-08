@@ -1,19 +1,15 @@
 #include <bits/stdc++.h>
-#define ll long long
 using namespace std;
-
-ll dp[117]={0,1,1,1};
 
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
-
     int n;
     cin>>n;
-
-    for(int i=4; i<=n; i++) {
+    long long dp[n+1];
+    dp[1]=1,dp[2]=1,dp[3]=1;
+    for(int i=4; i<n+1; i++) {
         dp[i]=dp[i-1]+dp[i-3];
     }
-
     cout<<dp[n];
 }
