@@ -1,40 +1,30 @@
-#include <iostream>
-#include <string.h>
-#include <map>
+#include <bits/stdc++.h>
 using namespace std;
-void fast_io(void)
-{
+
+int main() {
     ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
-}
-int main(void)
-{
-    fast_io();
-    map<int, string> mpInt;
-    map<string, int> mpStr;
-    int n, m, idx = 0;
-    cin >> n >> m;
-    while (n--)
-    {
-        idx++;
-        string str;
-        cin >> str;
-        mpInt.insert(make_pair(idx, str));
-        mpStr.insert(make_pair(str, idx));
+    cin.tie(nullptr);
+    int n,m;
+    cin>>n>>m;
+    unordered_map<int,string>res;
+    unordered_map<string,int>arr;
+    for(int i=1; i<=n; i++) {
+        string s;
+        cin>>s;
+        res[i]=s;
+        arr[s]=i;
     }
-    while (m--)
-    {
-        char arr[21];
-        cin >> arr;
-        if (isdigit(arr[0]))
-        {
-            int intArr = atoi(arr);
-            cout << mpInt.find(intArr)->second << "\n";
+
+    for(int i=0; i<m; i++) {
+        string s;
+        cin>>s;
+        bool check=true;
+        for(char c:s) {
+            if(!isdigit(c)) {
+                check=false;
+                break;
+            }
         }
-        else
-        {
-            cout << mpStr.find(arr)->second << "\n";
-        }
+        (check)?cout<<res[stoi(s)]<<"\n":cout<<arr[s]<<"\n";
     }
 }
