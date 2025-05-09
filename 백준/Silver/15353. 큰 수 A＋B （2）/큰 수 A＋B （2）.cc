@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-string solve(string a, string b){
+string add(string a, string b){
     string result;
     int carry = 0;
     int i = a.size() - 1;
@@ -25,5 +25,5 @@ int main() {
 
     string a,b;
     cin>>a>>b;
-    cout<<solve(a,b);
+    cout<<add(a,b);
 }
