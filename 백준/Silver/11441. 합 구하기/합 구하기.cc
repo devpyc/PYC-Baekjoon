@@ -1,24 +1,23 @@
 #include <bits/stdc++.h>
 using namespace std;
+
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    
     int n;
     cin>>n;
-    vector<int>ans(n,0);
-    for(int i=1; i<=n; i++) {
+    vector<int>sum(n+1,0);
+    for(int i=0; i<n; i++) {
         int x;
         cin>>x;
-        ans[i]=ans[i-1]+x;
+        sum[i+1]=sum[i]+x;
     }
-
-    int t;
-    cin>>t;
-    while(t--) {
-        int i,j;
-        i--; j--;
-        cin>>i>>j;
-        cout<<ans[j]-ans[i-1]<<"\n";
+    int m;
+    cin>>m;
+    for(int i=0; i<m; i++) {
+        int x,y;
+        cin>>x>>y;
+        cout<<sum[y]-sum[x-1]<<"\n";
     }
 }
