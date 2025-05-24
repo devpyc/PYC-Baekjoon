@@ -1,27 +1,20 @@
 #include <bits/stdc++.h>
-#define endl "\n"
 using namespace std;
 
-int m,n;
+int main() {
+    int n,m;
+    cin>>n>>m;
+    vector<bool>check(m+1,true);
+    check[0]=check[1]=false;
 
-bool isPrime(int num){
-    if(num==1) return false;
-    for(int i=2; i*i<=num; i++){
-        if(num%i==0) return false;
-    }
-    return true;
-}
-
-int main(){
-    ios::sync_with_stdio(false);
-    cin.tie(0);
-
-    cin >> m >> n;
-    for(int i=m; i<=n; i++){
-        if(isPrime(i)){
-            cout << i << endl;
+    for(int i=2; i*i<=m; i++) {
+        if(check[i]) {
+            for(int j=i*i; j<=m; j+=i) {
+                check[j]=false;
+            }
         }
     }
-
-    return 0;
+    for(int i=n; i<=m; i++) {
+        if(check[i]) cout<<i<<"\n";
+    }
 }
