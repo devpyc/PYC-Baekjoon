@@ -1,16 +1,13 @@
 #include <bits/stdc++.h>
-
 using namespace std;
 
 int main() {
-    int t;
-    cin >> t;
-    int a, b;
-    char c;
-
-    while (t--) {
-        cin >> a >> c >> b;
-        cout << a + b <<endl;
+    int n;
+    cin>>n;
+    while(n--) {
+        char c;
+        int a,b;
+        cin>>a>>c>>b;
+        cout<<a+b<<"\n";
     }
-    return 0;
 }
