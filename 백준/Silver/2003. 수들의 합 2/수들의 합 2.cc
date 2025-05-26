@@ -4,30 +4,21 @@ using namespace std;
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
+    
+    int n,m;
+    cin>>n>>m;
 
-    int n, m;
-    cin >> n >> m;
-
-    vector<int> arr(n);
-
-    for (int i = 0; i < n; i++) {
-        cin >> arr[i];
+    int arr[n];
+    for(int i=0; i<n; i++) {
+        cin>>arr[i];
     }
-
-    int l = 0, r = 0, sum = 0, ans = 0;
-
-    while (l <= r) {
-        if (sum == m) {
-            ans++;
-        }
-        if (sum >= m) {
-            sum -= arr[l];
-            l++;
-        } else if (r >= n) break;
-        else {
-            sum += arr[r];
-            r++;
-        }
+    int cnt=0,l=0,r=0,res=arr[0];
+    while(r<n) {
+        if(res==m) {
+            cnt++;
+            res+=arr[++r];
+        }else if(res<m) res+=arr[++r];
+        else res-=arr[l++];
     }
-    cout << ans << "\n";
+    cout<<cnt;
 }
