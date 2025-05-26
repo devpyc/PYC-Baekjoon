@@ -2,33 +2,21 @@
 using namespace std;
 
 int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(nullptr);
-
-    int N;
-    string book;
-    map<string, int> books;
-
-    cin >> N;
-
-    for (int i = 0; i < N; i++) {
-        cin >> book;
-        books[book]++;
+    int n;
+    cin>>n;
+    map<string,int>arr;
+    while(n--) {
+        string s;
+        cin>>s;
+        arr[s]++;
     }
-
-    int cnt = 0;
+    int max=0;
     string ans;
-
-    for (auto it = books.begin(); it != books.end(); it++) {
-        if (it->second > cnt) {
-            cnt = it->second;
-            ans = it->first;
-        } else if (it->second == cnt && it->first < ans) {
-            ans = it->first;
+    for(auto& i:arr) {
+        if(i.second>max) {
+            max=i.second;
+            ans=i.first;
         }
     }
-
-    cout << ans << '\n';
-
-    return 0;
+    cout<<ans<<"\n";
 }
