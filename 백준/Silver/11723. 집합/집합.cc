@@ -1,43 +1,37 @@
-#include <iostream>
-#include <string>
-
+#include <bits/stdc++.h>
 using namespace std;
 
 int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
+    cin.tie(0)->sync_with_stdio(0);
 
-    int m;
-    cin >> m;
+    int t,ans=0;
+    cin>>t;
 
-    int bitmask = 0;
+    while (t--) {
+        string s;
+        cin>>s;
 
-    while (m--) {
-        string op;
-        cin >> op;
-
-        if (op == "add") {
+        if (s=="add") {
             int x;
-            cin >> x;
-            bitmask |= (1 << x);
-        } else if (op == "remove") {
+            cin>>x;
+            ans|=(1<<x);
+        } else if(s=="remove") {
             int x;
-            cin >> x;
-            bitmask &= ~(1 << x);
-        } else if (op == "check") {
+            cin>>x;
+            ans&=~(1<<x);
+        } else if(s=="check") {
             int x;
-            cin >> x;
-            int result = (bitmask & (1 << x)) ? 1 : 0;
-            cout << result << "\n";
-        } else if (op == "toggle") {
+            cin>>x;
+            int res=(ans&(1<<x))?1:0;
+            cout<<res<<"\n";
+        } else if(s=="toggle") {
             int x;
-            cin >> x;
-            bitmask ^= (1 << x);
-        } else if (op == "all") {
-            bitmask = (1 << 21) - 1;
-        } else if (op == "empty") {
-            bitmask = 0;
+            cin>>x;
+            ans^=(1<<x);
+        } else if(s=="all") {
+            ans=(1<<21)-1;
+        } else if(s=="empty") {
+            ans=0;
         }
     }
-    return 0;
 }
