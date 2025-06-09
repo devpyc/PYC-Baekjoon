@@ -1,37 +1,32 @@
 #include <bits/stdc++.h>
-#define endl "\n"
 using namespace std;
 
-vector<int> solve(string pattern) {
-    int m = pattern.length();
-    vector<int> pi(m);
-    pi[0] = 0;
+vector<int> kmp(string s) {
+    int m=s.length();
+    vector<int>arr(m);
+    arr[0]=0;
 
     int j = 0;
-    for (int i = 1; i < m; i++) {
-        while (j > 0 && pattern[i] != pattern[j])
-            j = pi[j - 1];
+    for(int i=1; i<m; i++) {
+        while (j>0&&s[i]!=s[j]) {
+            j=arr[j-1];
+        }
 
-        if (pattern[i] == pattern[j])
-            j++;
-
-        pi[i] = j;
+        if (s[i]==s[j]) j++;
+        arr[i]=j;
     }
 
-    return pi;
+    return arr;
 }
 
 int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(nullptr);
-    
-    int L;
-    string ad;
+    cin.tie(0)->sync_with_stdio(0);
 
-    cin >> L >> ad;
+    int l;
+    string s;
 
-    vector<int> pi = solve(ad);
-    cout << L - pi[L - 1] << endl;
+    cin>>l>>s;
 
-    return 0;
+    vector<int>arr=kmp(s);
+    cout<<l-arr[l-1];
 }
