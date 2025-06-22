@@ -1,14 +1,12 @@
 #include <bits/stdc++.h>
-
 using namespace std;
 
 int main() {
+    cin.tie(0)->sync_with_stdio(0);
+
     string s;
-    while(1){
-        getline(cin,s);
-        if(s==""){
-            break;
-        }
+    
+    while (getline(cin,s)) {
         cout<<s<<"\n";
     }
 }
