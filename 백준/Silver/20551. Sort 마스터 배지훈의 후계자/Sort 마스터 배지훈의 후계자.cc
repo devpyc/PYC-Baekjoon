@@ -1,26 +1,20 @@
-#include <bits/stdc++.h>
+#include<bits/stdc++.h>
 using namespace std;
 
 int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(nullptr);
+    cin.tie(0)->sync_with_stdio(0);
 
     int n,m;
     cin>>n>>m;
-    vector<int>a(n);
-
-    for(int i=0; i<n; i++) {
-        cin>>a[i];
+    int arr[n];
+    for (int i=0; i<n; i++) {
+        cin>>arr[i];
     }
-    sort(a.begin(),a.end());
-
-    for(int i=0; i<m; i++) {
+    sort(arr,arr+n);
+    while (m--) {
         int x;
         cin>>x;
-        if(!binary_search(a.begin(),a.end(),x)) {
-            cout<<-1<<"\n";
-        }else {
-            cout<<lower_bound(a.begin(),a.end(),x)-a.begin()<<"\n";
-        }
+        (binary_search(arr,arr+n,x))?cout<<lower_bound(arr,arr+n,x)-arr:cout<<-1;
+        cout<<"\n";
     }
 }
