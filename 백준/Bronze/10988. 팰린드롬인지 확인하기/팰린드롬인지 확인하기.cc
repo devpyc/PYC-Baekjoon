@@ -1,18 +1,13 @@
-#include <iostream>
-
+#include <bits/stdc++.h>
 using namespace std;
 
-int main() {
-    string str;
-    cin >> str;
-    int len = str.length();
-    int cnt = 0;
+int main()
+{
+    cin.tie(0)->sync_with_stdio(0);
 
-    for (int i = 0; i < len / 2; i++) {
-        if (str[i] != str[str.length() - 1 - i]) {
-            cout << "0" << "\n";
-            return 0;
-        }
-    }
-    cout << "1" << "\n";
+    string s;
+    cin>>s;
+    string a=s;
+    reverse(s.begin(),s.end());
+    cout<<(a==s);
 }
