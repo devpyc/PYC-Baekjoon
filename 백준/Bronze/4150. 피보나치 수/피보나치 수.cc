@@ -1,48 +1,34 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-string add(const string &a, const string &b) {
-    string A = a, B = b;
-    reverse(A.begin(), A.end());
-    reverse(B.begin(), B.end());
-
-    if (A.size() < B.size()) swap(A, B);
-
-    string res = "";
+string add(string a, string b){
+    string result;
     int carry = 0;
-    for (size_t i = 0; i < A.size(); i++) {
-        int digitA = A[i] - '0';
-        int digitB = (i < B.size() ? B[i] - '0' : 0);
-        int sum = digitA + digitB + carry;
-        carry = sum / 10;
-        res.push_back((sum % 10) + '0');
-    }
-    if (carry)
-        res.push_back(carry + '0');
+    int i = a.size() - 1;
+    int j = b.size() - 1;
 
-    reverse(res.begin(), res.end());
-    return res;
+    while(i >= 0 || j >= 0 || carry > 0){
+        int sum = carry;
+        if(i >= 0) sum += a[i--] - '0';
+        if(j >= 0) sum += b[j--] - '0';
+        carry = sum / 10;
+        sum = sum % 10;
+        result += to_string(sum);
+    }
+    reverse(result.begin(), result.end());
+    return result;
 }
 
 int main(){
-    ios_base::sync_with_stdio(false);
-    cin.tie(nullptr);
+    cin.tie(0)->sync_with_stdio(0);
 
     int n;
-    cin >> n;
-
-    if(n == 1 || n == 2){
-        cout << "1";
-        return 0;
+    cin>>n;
+    vector<string>dp(n+1);
+    dp[0]="0";
+    dp[1]="1";
+    for (int i=2; i<=n; i++) {
+        dp[i]=add(dp[i-1],dp[i-2]);
     }
-
-    string f1 = "1", f2 = "1", f3;
-
-    for (int i = 3; i <= n; i++){
-        f3 = add(f1, f2);
-        f1 = f2;
-        f2 = f3;
-    }
-
-    cout << f2;
+    cout<<dp[n];
 }
