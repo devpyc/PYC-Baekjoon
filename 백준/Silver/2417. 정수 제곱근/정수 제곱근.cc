@@ -1,17 +1,12 @@
 #include <bits/stdc++.h>
-#define ll long long
 using namespace std;
 
-int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(nullptr);
+int main(){
+    cin.tie(0)->sync_with_stdio(0);
 
-    ll n;
+    long long n;
     cin>>n;
-
-    ll ans=sqrt(n);
-    if(ans*ans<n) {
-        ++ans;
-    }
+    long long ans=static_cast<long long>(sqrt(n));
+    if (ans*ans<n) ans++;
     cout<<ans;
 }
