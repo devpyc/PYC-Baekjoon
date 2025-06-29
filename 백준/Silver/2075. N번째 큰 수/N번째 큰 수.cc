@@ -1,16 +1,16 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(nullptr);
+int main(){
+    cin.tie(0)->sync_with_stdio(0);
 
     int n;
     cin>>n;
-    int arr[n*n];
-    for(int i=0; i<n*n; i++) {
+    int nn=n*n;
+    int arr[nn];
+    for (int i=0; i<nn; i++) {
         cin>>arr[i];
     }
-    sort(arr,arr+n*n);
-    cout<<arr[n*n-n];
+    sort(arr,arr+nn,greater<int>());
+    cout<<arr[n-1];
 }
