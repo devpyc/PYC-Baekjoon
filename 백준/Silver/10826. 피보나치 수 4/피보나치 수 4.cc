@@ -2,7 +2,7 @@
 using namespace std;
 
 string add(string a, string b){
-    string ans;
+    string result;
     int carry = 0;
     int i = a.size() - 1;
     int j = b.size() - 1;
@@ -13,20 +13,19 @@ string add(string a, string b){
         if(j >= 0) sum += b[j--] - '0';
         carry = sum / 10;
         sum = sum % 10;
-        ans += to_string(sum);
+        result += to_string(sum);
     }
-    reverse(ans.begin(), ans.end());
-    return ans;
+    reverse(result.begin(), result.end());
+    return result;
 }
 
-string dp[10001]={"0","1"};
-
-int main() {
+int main(){
     cin.tie(0)->sync_with_stdio(0);
 
     int n;
     cin>>n;
-    for(int i=2; i<=n; i++) {
+    string dp[10001]={"0","1"};
+    for (int i=2; i<=n; i++) {
         dp[i]=add(dp[i-1],dp[i-2]);
     }
     cout<<dp[n];
