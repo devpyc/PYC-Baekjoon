@@ -1,22 +1,13 @@
-#include <iostream>
-
+#include <bits/stdc++.h>
 using namespace std;
 
-int main()
-{
-	int a[9];
-	int max=0;
-	int cnt;
-	
-	for(int i=0; i<9; i++)
-	{
-		cin>>a[i];
-		if(a[i]>max)
-		{
-			max=a[i];
-			cnt=i+1;
-		}
-	}
-	cout<<max<<endl;
-	cout<<cnt;
+int main() {
+    cin.tie(0)->sync_with_stdio(0);
+
+    int arr[9];
+    for (int i=0; i<9; ++i) {
+        cin>>arr[i];
+    }
+    cout<<*max_element(arr,arr+9)<<"\n";
+    cout<<max_element(arr,arr+9)-arr+1;
 }
