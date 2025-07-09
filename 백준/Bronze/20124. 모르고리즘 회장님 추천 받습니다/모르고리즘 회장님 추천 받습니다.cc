@@ -1,31 +1,23 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-struct Participant {
-    string name;
-    int score;
-};
-
-bool compare(const Participant& a, const Participant& b) {
-    if (a.score == b.score) {
-        return a.name < b.name;
-    }
-    return a.score > b.score;
+bool comp(pair<int,string>a,pair<int,string>b) {
+    if (a.first==b.first) return a.second<b.second;
+    return a.first>b.first;
 }
 
 int main() {
-    int N;
-    cin >> N;
+    cin.tie(0)->sync_with_stdio(0);
 
-    vector<Participant> part(N);
-
-    for (int i = 0; i < N; i++) {
-        cin >> part[i].name >> part[i].score;
+    int t;
+    cin>>t;
+    vector<pair<int,string>>arr;
+    while (t--) {
+        string s;
+        int x;
+        cin>>s>>x;
+        arr.push_back({x,s});
     }
-
-    sort(part.begin(), part.end(), compare);
-
-    cout << part[0].name << endl;
-
-    return 0;
+    sort(arr.begin(),arr.end(),comp);
+    cout<<arr[0].second;
 }
