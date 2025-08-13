@@ -1,89 +1,62 @@
-#include <iostream>
-#include <vector>
-#include <map>
-#include <algorithm>
+#include <bits/stdc++.h>
+#define X first
+#define Y second
+#define INF 1000000000
 using namespace std;
 
-class SegmentTree {
-public:
-    SegmentTree(int n) : n(n) {
-        tree.resize(4 * n, 0);
+pair<int,int>init(int node, int start, int end, const vector<int>& arr, vector<pair<int,int>>& tree) {
+    if (start==end) {
+        return tree[node]={arr[start],arr[start]};
     }
+    int mid=(start+end)/2;
+    auto L=init(node*2,start,mid,arr,tree);
+    auto R=init(node*2+1,mid+1,end,arr,tree);
+    return tree[node]={min(L.X,R.X),max(L.Y,R.Y)};
+}
 
-    void update(int idx, int val, int node = 1, int start = 0, int end = -1) {
-        if (end == -1) end = n - 1;
-
-        if (start == end) {
-            tree[node] = val;
-        } else {
-            int mid = (start + end) / 2;
-
-            if (idx <= mid) {
-                update(idx, val, 2 * node, start, mid);
-            } else {
-                update(idx, val, 2 * node + 1, mid + 1, end);
-            }
-            tree[node] = max(tree[2 * node], tree[2 * node + 1]);
-        }
-    }
-
-    int query(int L, int R, int node = 1, int start = 0, int end = -1) {
-        if (end == -1) end = n - 1;
-        if (R < start || end < L) return 0;
-        if (L <= start && end <= R) return tree[node];
-
-        int mid = (start + end) / 2;
-        int left_query = query(L, R, 2 * node, start, mid);
-        int right_query = query(L, R, 2 * node + 1, mid + 1, end);
-
-        return max(left_query, right_query);
-    }
-
-private:
-    int n;
-    vector<int> tree;
-};
+pair<int,int> query(int node, int start, int end, int l, int r, const vector<pair<int,int>>& tree) {
+    if (r<start||end<l) return {INF,-INF};
+    if (l<=start&&end<=r) return tree[node];
+    int mid=(start+end)/2;
+    auto L=query(node*2,start,mid,l,r,tree);
+    auto R=query(node*2+1,mid+1,end,l,r,tree);
+    return {min(L.X,R.X), max(L.Y,R.Y)};
+}
 
 int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
+    cin.tie(0)->sync_with_stdio(0);
 
     int t;
-    cin >> t;
-
+    cin>>t;
     while (t--) {
-        int N;
-        cin >> N;
-
-        vector<int> A(N);
-        for (int i = 0; i < N; ++i) {
-            cin >> A[i];
+        int N; 
+        cin>>N;
+        vector<int>arr(N);
+        for (int i=0; i<N; ++i){
+            cin >> arr[i];
         }
 
-        SegmentTree segTree(N);
-        map<int, int> lastIndex;
+        vector<vector<int>>pos(N+1);
+        for (int i=0; i<N; ++i){
+            pos[arr[i]].push_back(i);
+        }
 
-        bool isWeird = true;
+        vector<pair<int,int>>tree(4*max(1,N));
+        init(1,0,N-1,arr,tree);
 
-        for (int i = 0; i < N; ++i) {
-            if (lastIndex.find(A[i]) != lastIndex.end()) {
-                int lastIdx = lastIndex[A[i]];
-                int maxInRange = segTree.query(lastIdx + 1, i - 1);
+        bool check=true;
 
-                if (maxInRange > A[i]) {
-                    isWeird = false;
+        for (int v=1; v<=N&&check; ++v) {
+            auto &p = pos[v];
+            for (int i=0; i+1<(int)p.size(); ++i) {
+                int l=p[i],r=p[i+1];
+                auto it=query(1,0,N-1,l,r,tree);
+                if (it.Y!=v) {
+                    check=false;
                     break;
                 }
             }
-            segTree.update(i, A[i]);
-            lastIndex[A[i]] = i;
         }
-
-        if (isWeird) {
-            cout << "Yes\n";
-        } else {
-            cout << "No\n";
-        }
+        cout<<(check?"Yes\n":"No\n");
     }
-    return 0;
 }
