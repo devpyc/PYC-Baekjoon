@@ -2,30 +2,27 @@
 using namespace std;
 
 int main() {
-    int N, S;
-    cin >> N >> S;
+    cin.tie(0)->sync_with_stdio(0);
 
-    vector<int> sequence(N);
-    for(int i = 0; i < N; i++) {
-        cin >> sequence[i];
+    int n;
+    long long m;
+
+    cin>>n>>m;
+    vector<int>arr(n);
+
+    for (int i=0; i<n; i++) {
+        cin>>arr[i];
     }
 
-    int start = 0, end = 0, sum = 0, minLength = INT_MAX;
-    while(true) {
-        if(sum >= S) {
-            minLength = min(minLength, end - start);
-            sum -= sequence[start++];
-        } else if(end == N) {
-            break;
-        } else {
-            sum += sequence[end++];
+    long long sum=0;
+    int ans=INT_MAX,l=0;
+
+    for (int i=0; i<n; i++) {
+        sum+=arr[i];
+        while (sum>=m) {
+            ans=min(ans,i-l+1);
+            sum-=arr[l++];
         }
     }
-
-    if(minLength == INT_MAX) {
-        cout << "0\n";
-    } else {
-        cout << minLength << "\n";
-    }
-    return 0;
+    cout<<(ans==INT_MAX?0:ans)<<"\n";
 }
