@@ -1,23 +1,17 @@
 #include <bits/stdc++.h>
-
+#define ll long long
 using namespace std;
 
-int main()
-{
-    vector<int>a;
-    int n[7];
-    int cnt=0;
-    for(int i=0; i<7; i++){
-        cin>>n[i];
-        if(n[i]%2==1){
-            a.push_back(n[i]);
-            cnt+=n[i];
-        }
+int main() {
+    cin.tie(0)->sync_with_stdio(0);
+
+    int t=7;
+    vector<int>arr;
+    int ans=0;
+    while (t--) {
+        int x;
+        cin>>x;
+        if (x%2==1) arr.push_back(x),ans+=x;
     }
-    sort(a.begin(),a.end());
-    if(cnt==0){
-        cout<<-1<<endl;
-    }else {
-        cout << cnt << "\n" << a.front() << endl;
-    }
+    (ans!=0)?cout<<ans<<"\n"<<*min_element(arr.begin(),arr.end()):cout<<-1;
 }
