@@ -1,45 +1,32 @@
-#include<iostream>
-#include<algorithm>
+#include <bits/stdc++.h>
 using namespace std;
 
-int chess[51][51];
+int main() {
+    cin.tie(0)->sync_with_stdio(0);
 
-int check(int x,int y)
-{
-    int cnt1 = 0;
-    int cnt2 = 0;
+    int n,m;
+    cin>>n>>m;
 
-    for (int i = x; i < x + 8; i++) {
-        for (int j = y; j < y + 8; j++) {
-            if ((i + j) % 2 == chess[i][j]) cnt1++;
-            if ((i + j + 1) % 2 == chess[i][j]) cnt2++;
+    vector<string>arr(n);
+    for (int i=0; i<n; i++) {
+        cin>>arr[i];
+    }
+
+    vector<vector<int>>sum(n+1,vector<int>(m+1,0));
+    for (int i=0; i<n; i++) {
+        for (int j=0; j<m; j++) {
+            char check=((i+j)%2==0)?'W':'B';
+            int res=(arr[i][j]!=check);
+            sum[i+1][j+1]=sum[i+1][j]+sum[i][j+1]-sum[i][j]+res;
         }
     }
 
-    return min(cnt1, cnt2);
-}
-
-int main()
-{
-    ios_base::sync_with_stdio(false);
-    cin.tie(0);
-    int N, M;
-    int mini = 2500;
-    char c;
-
-    cin >> N >> M;
-
-    for (int i = 0; i < N; i++) {
-        for (int j = 0; j < M; j++) {
-            cin >> c;
-            if (c == 'B') chess[i][j] = 0;
-            else chess[i][j] = 1;
+    int ans=64;
+    for (int i=0; i+7<n; i++) {
+        for (int j=0; j+7<m; j++) {
+            int ch=sum[i+8][j+8]-sum[i][j+8]-sum[i+8][j]+sum[i][j];
+            ans=min(ans,min(ch,64-ch));
         }
     }
-    for (int i = 0; i <= N-8; i++) {
-        for (int j = 0; j <= M-8; j++) {
-            if (mini > check(i, j)) mini = check(i, j);
-        }
-    }
-    cout << mini;
+    cout<<ans;
 }
