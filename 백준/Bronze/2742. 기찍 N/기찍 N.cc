@@ -1,9 +1,13 @@
-#include <iostream>
+#include <bits/stdc++.h>
+using namespace std;
+
 int main()
 {
-    long long N;
-    std::cin>>N;
-    for(int i=N; i>=1; i--){
-        std::cout<<i<<"\n";
+    cin.tie(0)->sync_with_stdio(0);
+
+    int n;
+    cin>>n;
+    while (n--) {
+        cout<<n+1<<"\n";
     }
 }
