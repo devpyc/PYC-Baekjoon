@@ -1,27 +1,27 @@
 #include <bits/stdc++.h>
-
 using namespace std;
 
 int main()
 {
+    cin.tie(0)->sync_with_stdio(0);
+
     int n,m;
-    vector<int> x;
-    int result=0;
-    cin>>n;
-    cin>>m;
-    for(int i=1; i<=m; i++){
-        if(i*i>=n && i*i<=m){
-            result+=(i*i);
-            x.push_back(i*i);
-        }
-        if(i>m){
-            break;
+    cin>>n>>m;
+    
+    int sum=0;
+    bool check=false;
+    
+    vector<int>arr;
+    
+    for (int i=n; i<=m; i++) {
+        double ans=sqrt(i);
+        
+        if (ans==(int)ans) {
+            sum+=i;
+            arr.push_back(i);
+            check=true;
         }
     }
-    sort(x.begin(),x.end());
-    if(result!=0){
-        cout<<result<<"\n"<<x[0];
-    }else{
-        cout<<-1;
-    }
+    if (check) cout<<sum<<"\n"<<*min_element(arr.begin(),arr.end());
+    else cout<<-1;
 }
