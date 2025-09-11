@@ -2,33 +2,23 @@
 using namespace std;
 
 int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(nullptr);
+    cin.tie(0)->sync_with_stdio(0);
 
-    while(true) {
+    while (true) {
         int n,m;
         cin>>n>>m;
+        if (n==0 && m==0) return 0;
 
-        if(n==0 && m==0) {
-            return 0;
+        int arr[n];
+        for (int i=0; i<n; i++) {
+            cin>>arr[i];
         }
-
-        vector<int>a(n);
-
-        for(int i=0; i<n; i++) {
-            cin>>a[i];
-        }
-
-        sort(a.begin(),a.end());
-
+        sort(arr,arr+n);
         int cnt=0;
-
-        for(int i=0; i<m; i++) {
+        while (m--) {
             int x;
             cin>>x;
-            if(binary_search(a.begin(),a.end(),x)) {
-                cnt++;
-            }
+            cnt+=binary_search(arr,arr+n,x);
         }
         cout<<cnt<<"\n";
     }
