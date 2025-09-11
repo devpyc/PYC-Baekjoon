@@ -1,15 +1,14 @@
-#include <iostream>
+#include <bits/stdc++.h>
 using namespace std;
 
-int fact(int n){
-    if(n<=1)
-        return 1;
-    else
-        return n*fact(n-1);
-    }
-int main()
-{
+int main() {
+    cin.tie(0)->sync_with_stdio(0);
+
+    long long ans=1;
     int n;
     cin>>n;
-    cout<<fact(n);
+    for (int i=1; i<=n; i++) {
+        ans*=i;
+    }
+    cout<<ans;
 }
