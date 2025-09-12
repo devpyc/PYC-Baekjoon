@@ -5,12 +5,11 @@ int main() {
     cin.tie(0)->sync_with_stdio(0);
 
     int n;
-    cin>>n;
     string s;
-    cin>>s;
+    cin>>n>>s;
 
-    for(int i=0; i<n; i++) {
-        if(s[i]=='I')s[i]='i';
+    for (int i=0; i<s.size(); i++) {
+        if (s[i]=='I') s[i]='i';
         else s[i]='L';
     }
     cout<<s;
