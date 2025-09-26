@@ -8,11 +8,11 @@
 
 ### 분류
 
-깊이 우선 탐색, 그래프 이론, 그래프 탐색, 트리
+그래프 이론, 그래프 탐색, 트리, 깊이 우선 탐색
 
 ### 제출 일자
 
-2024년 3월 4일 21:20:26
+2025년 9월 26일 14:47:18
 
 ### 문제 설명
 
@@ -22,11 +22,11 @@
 
 <p>예를 들어, 다음과 같은 트리가 있다고 하자.</p>
 
-<p style="text-align: center"><img alt="" src="" style="width: 200px; height: 185px;"></p>
+<p style="text-align: center"><img alt="" src="https://upload.acmicpc.net/560de878-d961-475e-ada4-e1f0774e5a84/-/preview/" style="width: 200px; height: 185px;"></p>
 
 <p>현재 리프 노드의 개수는 3개이다. (초록색 색칠된 노드) 이때, 1번을 지우면, 다음과 같이 변한다. 검정색으로 색칠된 노드가 트리에서 제거된 노드이다.</p>
 
-<p style="text-align: center"><img alt="" src="" style="width: 200px; height: 185px;"></p>
+<p style="text-align: center"><img alt="" src="https://upload.acmicpc.net/d46ddf4e-1b82-44cc-8c90-12f76e5bf88f/-/preview/" style="width: 200px; height: 185px;"></p>
 
 <p>이제 리프 노드의 개수는 1개이다.</p>
 
