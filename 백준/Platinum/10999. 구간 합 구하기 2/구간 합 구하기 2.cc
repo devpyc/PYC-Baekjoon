@@ -1,107 +1,95 @@
 #include <bits/stdc++.h>
-#define ll long long
-#define fi first
-#define se second
-#define pb push_back
-#define pob pop_back
-#define pi pair<int,int>
-#define mi map<int,int>
-#define qi queue<int>
-#define vi vector<int>
-#define vvi vector<vector<int>>
-#define tiii tuple<int,int,int>
-#define endl "\n"
-#define io ios_base::sync_with_stdio(false); cin.tie(nullptr);
 using namespace std;
 
-vector<ll> arr, segTree, lazy;
-int n, m, k;
+vector<long long> arr;
+vector<long long> tree, lazy;
 
-void update_range(int node, int start, int end, int l, int r, ll val) {
-    if (lazy[node] != 0) {
-        segTree[node] += (end - start + 1) * lazy[node];
-        if (start != end) {
-            lazy[node*2] += lazy[node];
-            lazy[node*2+1] += lazy[node];
-        }
-        lazy[node] = 0;
-    }
-
-    if (start > end || start > r || end < l)
-        return;
-
-    if (start >= l && end <= r) {
-        segTree[node] += (end - start + 1) * val;
-        if (start != end) {
-            lazy[node*2] += val;
-            lazy[node*2+1] += val;
-        }
-        return;
-    }
-
-    int mid = (start + end) / 2;
-    update_range(node*2, start, mid, l, r, val);
-    update_range(node*2+1, mid+1, end, l, r, val);
-    segTree[node] = segTree[node*2] + segTree[node*2+1];
-}
-
-ll query_range(int node, int start, int end, int l, int r) {
-    if (start > end || start > r || end < l)
-        return 0;
-
-    if (lazy[node] != 0) {
-        segTree[node] += (end - start + 1) * lazy[node];
-        if (start != end) {
-            lazy[node*2] += lazy[node];
-            lazy[node*2+1] += lazy[node];
-        }
-        lazy[node] = 0;
-    }
-
-    if (start >= l && end <= r)
-        return segTree[node];
-
-    int mid = (start + end) / 2;
-    ll p1 = query_range(node*2, start, mid, l, r);
-    ll p2 = query_range(node*2+1, mid+1, end, l, r);
-    return p1 + p2;
-}
-
-void build(int node, int start, int end) {
+void init(int node, int start, int end) {
     if (start == end) {
-        segTree[node] = arr[start];
-    } else {
-        int mid = (start + end) / 2;
-        build(node*2, start, mid);
-        build(node*2+1, mid+1, end);
-        segTree[node] = segTree[node*2] + segTree[node*2+1];
+        tree[node] = arr[start];
+        return;
     }
+
+    int mid = (start + end) / 2;
+    init(node * 2, start, mid);
+    init(node * 2 + 1, mid + 1, end);
+    tree[node] = tree[node * 2] + tree[node * 2 + 1];
+}
+
+void updateLazy(int node, int start, int end, int left, int right, long long diff) {
+    if (lazy[node] != 0) {
+        tree[node] += (end - start + 1) * lazy[node];
+        if (start != end) {
+            lazy[node * 2] += lazy[node];
+            lazy[node * 2 + 1] += lazy[node];
+        }
+        lazy[node] = 0;
+    }
+
+    if (end < left || start > right) return;
+
+    if (left <= start && end <= right) {
+        tree[node] += (end - start + 1) * diff;
+        if (start != end) {
+            lazy[node * 2] += diff;
+            lazy[node * 2 + 1] += diff;
+        }
+        return;
+    }
+
+    int mid = (start + end) / 2;
+    updateLazy(node * 2, start, mid, left, right, diff);
+    updateLazy(node * 2 + 1, mid + 1, end, left, right, diff);
+    tree[node] = tree[node * 2] + tree[node * 2 + 1];
+}
+
+long long query(int node, int start, int end, int left, int right) {
+    if (lazy[node] != 0) {
+        tree[node] += (end - start + 1) * lazy[node];
+        if (start != end) {
+            lazy[node * 2] += lazy[node];
+            lazy[node * 2 + 1] += lazy[node];
+        }
+        lazy[node] = 0;
+    }
+
+    if (end < left || start > right) return 0;
+
+    if (left <= start && end <= right) return tree[node];
+
+    int mid = (start + end) / 2;
+    return query(node * 2, start, mid, left, right) + query(node * 2 + 1, mid + 1, end, left, right);
 }
 
 int main() {
-    io;
-    cin >> n >> m >> k;
-    arr.resize(n);
-    segTree.resize(4*n);
-    lazy.resize(4*n, 0);
+    cin.tie(0)->sync_with_stdio(0);
 
-    for (int i = 0; i < n; i++) {
+    int n,m,k;
+    cin>>n>>m>>k;
+
+    arr.resize(n + 1);
+    tree.resize(4 * (n + 1));
+    lazy.resize(4 * (n + 1));
+
+    for (int i = 1; i <= n; ++i) {
         cin >> arr[i];
     }
 
-    build(1, 0, n-1);
+    init(1, 1, n);
 
-    for (int i = 0; i < m + k; i++) {
-        int a, b, c;
-        ll d;
-        cin >> a >> b >> c;
-        if (a == 1) {
-            cin >> d;
-            update_range(1, 0, n-1, b-1, c-1, d);
-        } else if (a == 2) {
-            cout << query_range(1, 0, n-1, b-1, c-1) << endl;
+    for (int i = 0; i < m + k; ++i) {
+        int c;
+        cin >> c;
+
+        if (c == 1) {
+            int l, r;
+            long long ss;
+            cin >> l >> r >> ss;
+            updateLazy(1, 1, n, l, r, ss);
+        } else {
+            int left, right;
+            cin >> left >> right;
+            cout << query(1, 1, n, left, right) << '\n';
         }
     }
-
-    return 0;
 }
