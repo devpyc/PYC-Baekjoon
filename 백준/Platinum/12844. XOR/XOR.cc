@@ -98,6 +98,4 @@ int32_t main() {
             cout << segTree.query(i, j) << endl;
         }
     }
-
-    return 0;
 }
