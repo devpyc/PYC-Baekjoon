@@ -1,19 +1,18 @@
 #include <bits/stdc++.h>
+#define MAX 201
 using namespace std;
 
-const int MAX = 201;
-
-int N, M;
+int n, m;
 vector<int> adj[MAX];
-int bMatched[MAX];
+int check[MAX];
 bool visited[MAX];
 
 bool dfs(int cow) {
-    for (int barn : adj[cow]) {
+    for (int barn: adj[cow]) {
         if (visited[barn]) continue;
         visited[barn] = true;
-        if (bMatched[barn] == -1 || dfs(bMatched[barn])) {
-            bMatched[barn] = cow;
+        if (check[barn] == -1 || dfs(check[barn])) {
+            check[barn] = cow;
             return true;
         }
     }
@@ -21,12 +20,11 @@ bool dfs(int cow) {
 }
 
 int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
+    cin.tie(0)->sync_with_stdio(0);
 
-    cin >> N >> M;
+    cin >> n >> m;
 
-    for (int i = 1; i <= N; ++i) {
+    for (int i = 1; i <= n; ++i) {
         int S;
         cin >> S;
         for (int j = 0; j < S; ++j) {
@@ -36,17 +34,14 @@ int main() {
         }
     }
 
-    memset(bMatched, -1, sizeof(bMatched));
+    memset(check, -1, sizeof(check));
 
-    int matchCount = 0;
-    for (int cow = 1; cow <= N; ++cow) {
+    int cnt = 0;
+    for (int i = 1; i <= n; ++i) {
         memset(visited, false, sizeof(visited));
-        if (dfs(cow)) {
-            ++matchCount;
+        if (dfs(i)) {
+            ++cnt;
         }
     }
-
-    cout << matchCount << endl;
-
-    return 0;
+    cout << cnt;
 }
