@@ -1,15 +1,13 @@
 #include <bits/stdc++.h>
-#define endl "\n"
+#define MAX 30000
 using namespace std;
 
-struct Event {
+struct mars {
     int x, y1, y2, type;
-    bool operator<(const Event &e) const {
+    bool operator<(const mars &e) const {
         return x < e.x;
     }
 };
-
-const int MAX = 30000;
 
 struct SegmentTree {
     vector<int> tree, count;
@@ -41,32 +39,29 @@ struct SegmentTree {
 };
 
 int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(nullptr);
-    
+    cin.tie(0)->sync_with_stdio(0);
+
     int n;
     cin >> n;
-    vector<Event> events;
+    vector<mars> arr;
     for (int i = 0; i < n; ++i) {
         int x1, y1, x2, y2;
         cin >> x1 >> y1 >> x2 >> y2;
-        events.push_back({x1, y1, y2, 1});
-        events.push_back({x2, y1, y2, -1});
+        arr.push_back({x1, y1, y2, 1});
+        arr.push_back({x2, y1, y2, -1});
     }
 
-    sort(events.begin(), events.end());
+    sort(arr.begin(), arr.end());
 
     SegmentTree segTree(MAX);
-    int lastX = events[0].x;
+    int res = arr[0].x;
     long long area = 0;
 
-    for (const auto &e : events) {
+    for (const auto &e : arr) {
         int x = e.x, y1 = e.y1, y2 = e.y2, type = e.type;
-        area += (long long)(x - lastX) * segTree.query();
+        area += (long long)(x - res) * segTree.query();
         segTree.update(1, 0, MAX, y1, y2, type);
-        lastX = x;
+        res = x;
     }
-
-    cout << area << endl;
-    return 0;
+    cout << area;
 }
