@@ -1,24 +1,11 @@
 #include <bits/stdc++.h>
-#define ll long long
-#define fi first
-#define se second
-#define pb push_back
-#define pob pop_back
-#define pii pair<int,int>
-#define mi map<int,int>
-#define qi queue<int>
-#define vi vector<int>
-#define vvi vector<vector<int>>
-#define tiii tuple<int,int,int>
-#define endl "\n"
-#define io ios_base::sync_with_stdio(false); cin.tie(nullptr);
+#define MAX 80
 using namespace std;
 
-const int MAX = 80;
 int N, M;
 bool seat[MAX][MAX];
 bool visited[MAX][MAX];
-pii con[MAX][MAX];
+pair<int,int> cheat[MAX][MAX];
 
 int dx[] = {0, 0, -1, -1, 1, 1};
 int dy[] = {-1, 1, -1, 1, -1, 1};
@@ -28,8 +15,8 @@ bool bip_match(int n, int m) {
         int nn = n + dx[d], mm = m + dy[d];
         if (0 <= nn && nn < N && 0 <= mm && mm < M && !visited[nn][mm] && seat[nn][mm]) {
             visited[nn][mm] = true;
-            if (con[nn][mm] == pii(-1, -1) || bip_match(con[nn][mm].fi, con[nn][mm].se)) {
-                con[nn][mm] = pii(n, m);
+            if (cheat[nn][mm] == pair<int,int>(-1, -1) || bip_match(cheat[nn][mm].first, cheat[nn][mm].second)) {
+                cheat[nn][mm] = pair<int,int>(n, m);
                 return true;
             }
         }
@@ -38,23 +25,25 @@ bool bip_match(int n, int m) {
 }
 
 int main() {
-    io
+    cin.tie(0)->sync_with_stdio(0);
+
     int t;
     cin >> t;
+
     while (t--) {
         cin >> N >> M;
-        vector<string> matrix(N);
+        vector<string> arr(N);
         for (int i = 0; i < N; i++) {
-            cin >> matrix[i];
+            cin >> arr[i];
         }
 
         int ans = 0;
         memset(seat, false, sizeof(seat));
-        memset(con, -1, sizeof(con));
+        memset(cheat, -1, sizeof(cheat));
 
         for (int n = 0; n < N; n++) {
             for (int m = 0; m < M; m++) {
-                if (matrix[n][m] == '.') {
+                if (arr[n][m] == '.') {
                     seat[n][m] = true;
                     ans++;
                 }
@@ -71,9 +60,6 @@ int main() {
                 }
             }
         }
-
-        cout << ans << endl;
+        cout << ans << "\n";
     }
-
-    return 0;
 }
