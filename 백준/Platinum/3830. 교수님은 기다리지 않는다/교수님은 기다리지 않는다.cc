@@ -1,29 +1,16 @@
 #include <bits/stdc++.h>
-#define ll long long
-#define fi first
-#define se second
-#define pb push_back
-#define pob pop_back
-#define pii pair<int,int>
-#define mi map<int,int>
-#define qi queue<int>
-#define vi vector<int>
-#define vvi vector<vector<int>>
-#define tiii tuple<int,int,int>
-#define endl "\n"
-#define io ios_base::sync_with_stdio(false); cin.tie(nullptr);
+#define MAX 100001
 using namespace std;
 
-const int MAX = 100001;
 int parent[MAX];
-long long diff[MAX];
+long long arr[MAX];
 
 int find(int x) {
     if (parent[x] == x) {
         return x;
     }
     int p = find(parent[x]);
-    diff[x] += diff[parent[x]];
+    arr[x] += arr[parent[x]];
     return parent[x] = p;
 }
 
@@ -32,19 +19,21 @@ void union_sets(int a, int b, int w) {
     int rootB = find(b);
     if (rootA != rootB) {
         parent[rootB] = rootA;
-        diff[rootB] = diff[a] - diff[b] + w;
+        arr[rootB] = arr[a] - arr[b] + w;
     }
 }
 
 int main() {
-    io;
+    cin.tie(0)->sync_with_stdio(0);
+
     int n, m;
+
     while (cin >> n >> m) {
         if (n == 0 && m == 0) break;
 
         for (int i = 1; i <= n; i++) {
             parent[i] = i;
-            diff[i] = 0;
+            arr[i] = 0;
         }
 
         for (int i = 0; i < m; i++) {
@@ -58,13 +47,11 @@ int main() {
             } else if (s == "?") {
                 cin >> a >> b;
                 if (find(a) == find(b)) {
-                    cout << diff[b] - diff[a] << endl;
+                    cout << arr[b] - arr[a] << "\n";
                 } else {
-                    cout << "UNKNOWN" << endl;
+                    cout << "UNKNOWN\n";
                 }
             }
         }
     }
-
-    return 0;
 }
