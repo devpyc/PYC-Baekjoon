@@ -1,27 +1,21 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int n,m;
-
 int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(nullptr);
-    
+    cin.tie(0)->sync_with_stdio(0);
+
+    int n;
     cin>>n;
-
-    int a[n];
-    for(int i=0; i<n; i++) {
-        cin>>a[i];
+    int arr[n];
+    for (int i=0; i<n; i++) {
+        cin>>arr[i];
     }
-
-    sort(a,a+n);
-
+    sort(arr,arr+n);
+    int m;
     cin>>m;
-
-    for(int i=0; i<m; i++) {
+    while (m--) {
         int x;
         cin>>x;
-
-        cout<<upper_bound(a,a+n,x)-lower_bound(a,a+n,x)<<" ";
+        cout<<upper_bound(arr,arr+n,x)-lower_bound(arr,arr+n,x)<<" ";
     }
 }
