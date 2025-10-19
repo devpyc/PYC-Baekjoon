@@ -2,41 +2,28 @@
 using namespace std;
 
 int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(nullptr);
+    cin.tie(0)->sync_with_stdio(0);
 
     int n;
-    cin >> n;
-
-    vector<int> a(n);
-    for (int i = 0; i < n; i++) {
-        cin >> a[i];
+    cin>>n;
+    int arr[n];
+    for (int i=0; i<n; i++) {
+        cin>>arr[i];
     }
-
-    sort(a.begin(), a.end());
-
-    int l = 0;
-    int r = n - 1;
-    int m = 2e9;
-    int x = 0, y = 0;
-
-    while (l < r) {
-        int s = a[l] + a[r];
-
-        if (abs(s) < m) {
-            m = abs(s);
-            x = a[l];
-            y = a[r];
+    sort(arr,arr+n);
+    int l=0,r=n-1;
+    int a,b;
+    int MIN=INT_MAX;
+    while (l<r) {
+        int sum=arr[l]+arr[r];
+        if (abs(sum)<MIN) {
+            a=l,b=r;
+            MIN=abs(sum);
         }
 
-        if (s < 0) {
-            l++;
-        } else {
-            r--;
-        }
+        if (sum==0) break;
+        else if (sum<0) l++;
+        else r--;
     }
-
-    cout << x << " " << y << "\n";
-
-    return 0;
+    cout<<arr[a]<<" "<<arr[b];
 }
