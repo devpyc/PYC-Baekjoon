@@ -1,55 +1,54 @@
-#include <iostream>
-#include <algorithm>
-#include <cstring>
-#include <vector>
-#include <queue>
+#include <bits/stdc++.h>
 using namespace std;
 
-vector<int> a[1001];
-bool check[1001];
+vector<int>graph[100001];
+bool visited[100001];
 
-void dfs(int node) {
-    check[node] = true;
-    cout << node << " ";
-    for (int i=0; i<a[node].size(); i++) {
-        int next = a[node][i];
-        if (check[next] == false) {
-            dfs(next);
+void dfs(int x) {
+    visited[x]=true;
+    cout<<x<<" ";
+
+    for (int i:graph[x]) {
+        if (!visited[i]) {
+            dfs(i);
         }
     }
 }
+
 void bfs(int start) {
-    queue<int> q;
-    check[start] = true;
+    queue<int>q;
     q.push(start);
+    visited[start]=true;
+
     while (!q.empty()) {
-        int node = q.front();
+        int x=q.front();
         q.pop();
-        cout << node << " ";
-        for (int i=0; i<a[node].size(); i++) {
-            int next = a[node][i];
-            if (check[next] == false) {
-                check[next] = true;
-                q.push(next);
+        cout<<x<<" ";
+
+        for (int i:graph[x]) {
+            if (!visited[i]) {
+                q.push(i);
+                visited[i]=true;
             }
         }
     }
 }
+
 int main() {
-    int n, m, start;
-    cin >> n >> m >> start;
+    cin.tie(0)->sync_with_stdio(0);
+
+    int n,m,r,u,v;
+    cin>>n>>m>>r;
     for (int i=0; i<m; i++) {
-        int u,v;
-        cin >> u >> v;
-        a[u].push_back(v);
-        a[v].push_back(u);
+        cin>>u>>v;
+        graph[u].push_back(v);
+        graph[v].push_back(u);
     }
     for (int i=1; i<=n; i++) {
-        sort(a[i].begin(), a[i].end());
+        sort(graph[i].begin(),graph[i].end());
     }
-    dfs(start);
-    cout << '\n';
-    memset(check,false,sizeof(check));
-    bfs(start);
-    return 0;
+    dfs(r);
+    memset(visited,false,sizeof(visited));
+    cout<<"\n";
+    bfs(r);
 }
