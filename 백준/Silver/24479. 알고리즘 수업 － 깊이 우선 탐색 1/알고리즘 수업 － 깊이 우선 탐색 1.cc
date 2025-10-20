@@ -1,51 +1,37 @@
-#include <iostream>
-#include <vector>
-#include <algorithm>
-
+#include <bits/stdc++.h>
 using namespace std;
 
-const int MAX = 100001;
-vector<int> graph[MAX];
-bool visited[MAX];
-int order[MAX];
-int cnt = 1;
+vector<int>graph[100001];
+bool visited[100001];
+int ans[100001];
+int cnt=0;
 
 void dfs(int x) {
-    visited[x] = true;
-    order[x] = cnt++;
-
-    for (int i = 0; i < graph[x].size(); i++) {
-        int next = graph[x][i];
-        if (!visited[next]) {
-            dfs(next);
+    ans[x]=++cnt;
+    visited[x]=true;
+    for (int i:graph[x]) {
+        if (!visited[i]) {
+            dfs(i);
         }
     }
 }
 
 int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
+    cin.tie(0)->sync_with_stdio(0);
 
-    int n, m, r;
-    cin >> n >> m >> r;
-
-    for (int i = 0; i < m; i++) {
-        int u, v;
-        cin >> u >> v;
+    int n,m,r;
+    cin>>n>>m>>r;
+    for (int i=0; i<m; i++) {
+        int u,v;
+        cin>>u>>v;
         graph[u].push_back(v);
         graph[v].push_back(u);
     }
-
-    for (int i = 1; i <= n; i++) {
-        sort(graph[i].begin(), graph[i].end());
+    for (int i=1; i<=n; i++) {
+        sort(graph[i].begin(),graph[i].end());
     }
-
     dfs(r);
-
-    for (int i = 1; i <= n; i++) {
-        cout << order[i] << '\n';
+    for (int i=1; i<=n; i++) {
+        cout<<ans[i]<<"\n";
     }
-
-    return 0;
 }
