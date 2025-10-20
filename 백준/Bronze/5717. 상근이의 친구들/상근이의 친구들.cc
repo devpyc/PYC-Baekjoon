@@ -1,15 +1,13 @@
 #include <bits/stdc++.h>
-#define endl "\n"
-#define io ios_base::sync_with_stdio(false); cin.tie(nullptr);
 using namespace std;
+
 int main() {
-    io;
-    int x,y;
-    while(1){
-        cin>>x>>y;
-        if(x==0 && y==0){
-            break;
-        }
-        cout<<x+y<<endl;
+    cin.tie(0)->sync_with_stdio(0);
+
+    while (1) {
+        int a,b;
+        cin>>a>>b;
+        if (a==0&&b==0) return 0;
+        cout<<a+b<<"\n";
     }
 }
