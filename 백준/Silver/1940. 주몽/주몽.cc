@@ -2,28 +2,28 @@
 using namespace std;
 
 int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(nullptr);
+    cin.tie(0)->sync_with_stdio(0);
 
     int n,m;
     cin>>n>>m;
 
     int arr[n];
-    for(int i=0; i<n; i++) {
+    for (int i=0; i<n; i++) {
         cin>>arr[i];
     }
     sort(arr,arr+n);
 
     int l=0,r=n-1;
     int cnt=0;
-    while(l<r) {
-        int ans=arr[l]+arr[r];
-        if(ans==m) {
+    while (l<r) {
+        int sum=arr[l]+arr[r];
+        if (sum==m) {
             cnt++;
             l++;
             r--;
-        }else if(ans<m) l++;
-        else r--;
+        }
+        else if (sum>m) r--;
+        else l++;
     }
     cout<<cnt;
 }
