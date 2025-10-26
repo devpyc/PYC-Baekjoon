@@ -1,34 +1,30 @@
 #include <bits/stdc++.h>
-#define endl "\n"
 using namespace std;
 
 int main() {
-    int n, x;
-    cin >> n;
-    vector<int> seq(n);
-    for (int i = 0; i < n; i++) {
-        cin >> seq[i];
+    cin.tie(0)->sync_with_stdio(0);
+
+    int n;
+    cin>>n;
+    int arr[n];
+    for (int i=0; i<n; i++) {
+        cin>>arr[i];
     }
-    cin >> x;
-
-    sort(seq.begin(), seq.end());
-
-    int left = 0, right = n - 1;
-    int count = 0;
-
-    while (left < right) {
-        int sum = seq[left] + seq[right];
-        if (sum == x) {
-            count++;
-            left++;
-            right--;
-        } else if (sum < x) {
-            left++;
-        } else {
-            right--;
+    sort(arr,arr+n);
+    int x;
+    cin>>x;
+    int l=0,r=n-1;
+    int cnt=0;
+    while (l<r) {
+        int sum=arr[l]+arr[r];
+        if (sum==x) {
+            cnt++;
+            l++;
+        }else if (sum>x) {
+            r--;
+        }else {
+            l++;
         }
     }
-
-    cout << count << endl;
-    return 0;
+    cout<<cnt;
 }
