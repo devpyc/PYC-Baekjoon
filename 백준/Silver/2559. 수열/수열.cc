@@ -2,31 +2,22 @@
 using namespace std;
 
 int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(nullptr);
+    cin.tie(0)->sync_with_stdio(0);
 
-    int n,k;
-    cin >> n >> k;
-
-    vector<int> temp(n);
-    for(int i = 0; i < n; i++) {
-        cin >> temp[i];
+    int n,m;
+    cin>>n>>m;
+    int arr[n];
+    int sum=0;
+    for (int i=0; i<n; i++) {
+        cin>>arr[i];
     }
-
-    int sum = 0;
-
-    for(int i = 0; i < k; i++) {
-        sum += temp[i];
+    for (int i=0; i<m; i++) {
+        sum+=arr[i];
     }
-
-    int ans = sum;
-
-    for(int i = k; i < n; i++) {
-        sum = sum - temp[i-k] + temp[i];
-        ans = max(ans, sum);
+    int MAX=sum;
+    for (int i=m; i<n; i++) {
+        sum+=arr[i]-arr[i-m];
+        MAX=max(MAX,sum);
     }
-
-    cout << ans << '\n';
-
-    return 0;
+    cout<<MAX;
 }
