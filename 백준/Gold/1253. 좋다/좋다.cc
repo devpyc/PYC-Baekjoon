@@ -4,14 +4,16 @@ using namespace std;
 int main() {
     cin.tie(0)->sync_with_stdio(0);
 
-    int n;
+    int n,cnt=0;
     cin>>n;
+
     int arr[n];
     for (int i=0; i<n; i++) {
         cin>>arr[i];
     }
-    int cnt=0;
+
     sort(arr,arr+n);
+
     for (int i=0; i<n; i++) {
         bool check=false;
         int l=0,r=n-1;
@@ -20,6 +22,7 @@ int main() {
                 l++;
                 continue;
             }
+
             if (r==i) {
                 r--;
                 continue;
@@ -35,7 +38,7 @@ int main() {
                 r--;
             }
         }
-        if (check) cnt++;
+        cnt+=(check);
     }
     cout<<cnt;
 }
