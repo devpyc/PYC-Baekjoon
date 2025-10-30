@@ -4,26 +4,20 @@ using namespace std;
 int main() {
     cin.tie(0)->sync_with_stdio(0);
 
-    int n,k;
-    cin>>n>>k;
-
-    vector<int>arr(n);
+    int n,m;
+    cin>>n>>m;
+    int arr[n];
+    int sum=0;
     for (int i=0; i<n; i++) {
         cin>>arr[i];
     }
-
-    int sum=0;
-    for (int i=0; i<k; i++) {
+    for (int i=0; i<m; i++) {
         sum+=arr[i];
     }
-
-    int m=sum;
-
-    for (int i=k; i<n; i++) {
-        sum+=arr[i]-arr[i-k];
-        if (sum>m) {
-            m=sum;
-        }
+    int MAX=sum;
+    for (int i=m; i<n; i++) {
+        sum+=arr[i]-arr[i-m];
+        MAX=max(MAX,sum);
     }
-    cout<<m;
+    cout<<MAX;
 }
