@@ -1,13 +1,2 @@
-#include <bits/stdc++.h>
-using namespace std;
-
-int main() {
-    int t;
-    cin >> t;
-
-    while (t--) {
-        cout<<"LoveisKoreaUniversity ";
-    }
-
-    return 0;
-}
+#include <iostream>
+int main(){int n;std::cin>>n;while(n--)std::cout<<"LoveisKoreaUniversity ";}
