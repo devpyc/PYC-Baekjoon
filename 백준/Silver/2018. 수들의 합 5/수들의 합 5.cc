@@ -1,28 +1,26 @@
 #include <bits/stdc++.h>
-#define ll long long
 using namespace std;
 
-int main()
-{
-    ll n;
-    cin >> n;
-    int count=1;
-    int s_index=1;
-    int e_index=1;
-    int sum=1;
+int main() {
+    cin.tie(0)->sync_with_stdio(0);
 
-    while(e_index!=n){
+    long long n;
+    cin>>n;
+    int cnt=1;
+    int r=1,l=1,sum=1;
+
+    while(l!=n){
         if(sum==n){
-            count++;
-            e_index++;
-            sum+=e_index;
+            cnt++;
+            l++;
+            sum+=l;
         }else if(sum>n){
-            sum-=s_index;
-            s_index++;
+            sum-=r;
+            r++;
         }else{
-            e_index++;
-            sum+=e_index;
+            l++;
+            sum+=l;
         }
     }
-    cout<<count<<endl;
+    cout<<cnt;
 }
