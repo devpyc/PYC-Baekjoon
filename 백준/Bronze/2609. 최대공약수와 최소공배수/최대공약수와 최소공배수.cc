@@ -1,10 +1,2 @@
 #include <bits/stdc++.h>
-using namespace std;
-
-int main(){
-    cin.tie(0)->sync_with_stdio(0);
-
-    int a,b;
-    cin>>a>>b;
-    cout<<gcd(a,b)<<"\n"<<lcm(a,b);
-}
+int main(){int a,b;std::cin>>a>>b;std::cout<<std::gcd(a,b)<<"\n"<<std::lcm(a,b);}
