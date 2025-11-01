@@ -1,58 +1,40 @@
-#include <iostream>
-#include <vector>
-
+#include <bits/stdc++.h>
 using namespace std;
 
-// 에라토스테네스의 체를 사용하여 소수를 구함
-vector<int> getPrimes(int n) {
-    vector<bool> isPrime(n + 1, true);
-    vector<int> primes;
+bool check[10001];
 
-    for (int i = 2; i * i <= n; ++i) {
-        if (isPrime[i]) {
-            for (int j = i * i; j <= n; j += i) {
-                isPrime[j] = false;
-            }
-        }
+bool prime(int n) {
+    if (n<2) return false;
+    for (int i=2; i*i<=n; i++) {
+        if (n%i==0) return false;
     }
-
-    for (int i = 2; i <= n; ++i) {
-        if (isPrime[i]) {
-            primes.push_back(i);
-        }
-    }
-
-    return primes;
+    return true;
 }
 
 int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
+    cin.tie(0)->sync_with_stdio(0);
 
-    int N;
-    cin >> N;
+    int n;
+    cin>>n;
 
-    // 소수 구하기
-    vector<int> primes = getPrimes(N);
+    vector<int>arr;
+    for (int i=2; i<=n; i++) {
+        if (prime(i)) arr.push_back(i);
+    }
 
-    int answer = 0;
-    int left = 0, right = 0;
-    int sum = 0;
-
+    int l=0,r=0,cnt=0,sum=0;
     while (true) {
-        if (sum >= N) {
-            sum -= primes[left++];
-        } else if (right == primes.size()) {
+        if (sum>=n) {
+            sum-=arr[l++];
+        } else if (r==arr.size()) {
             break;
         } else {
-            sum += primes[right++];
+            sum+=arr[r++];
         }
 
-        if (sum == N) {
-            answer++;
+        if (sum==n) {
+            cnt++;
         }
     }
-    cout << answer << '\n';
-
-    return 0;
+    cout<<cnt;
 }
