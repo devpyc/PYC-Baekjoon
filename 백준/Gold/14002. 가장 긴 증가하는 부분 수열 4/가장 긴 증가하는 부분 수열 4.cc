@@ -1,50 +1,55 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+vector<int>ans;
+
+// int lis(const vector<int>&arr) {
+//     vector<int>lis;
+//     for (int x:arr) {
+//         auto it=std::lower_bound(lis.begin(),lis.end(),x);
+//         if (it==lis.end()) lis.push_back(x);
+//         else *it=x;
+//     }
+//     return static_cast<int>(lis.size());
+// }
+
+void lis(const vector<int>&arr) {
+    vector<int>b,pre(arr.size(),-1),idx;
+    for (int i=0; i<arr.size(); i++) {
+        auto it=lower_bound(b.begin(),b.end(),arr[i]);
+        int k=it-b.begin();
+
+        if (it==b.end()) {
+            b.push_back(arr[i]);
+            idx.push_back(i);
+        }else {
+            *it=arr[i];
+            idx[k]=i;
+        }
+
+        if (k>0) pre[i]=idx[k-1];
+    }
+
+    vector<int>ans;
+    for (int i=idx.back(); i!=-1; i=pre[i]) {
+        ans.push_back(arr[i]);
+    }
+    reverse(ans.begin(),ans.end());
+    cout<<ans.size()<<"\n";
+    for (int i:ans) {
+        cout<<i<<" ";
+    }
+}
+
 int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(nullptr);
+    cin.tie(0)->sync_with_stdio(0);
 
     int n;
-    cin >> n;
+    cin>>n;
 
-    vector<int> arr(n);
-    for (int i = 0; i < n; i++) {
-        cin >> arr[i];
+    vector<int>arr(n);
+    for (int i=0; i<n; i++) {
+        cin>>arr[i];
     }
-
-    vector<int> dp(n, 1);
-    vector<int> prev(n, -1);
-
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < i; j++) {
-            if (arr[j] < arr[i] && dp[i] < dp[j] + 1) {
-                dp[i] = dp[j] + 1;
-                prev[i] = j;
-            }
-        }
-    }
-
-    int len = 0;
-    int idx = 0;
-
-    for (int i = 0; i < n; i++) {
-        if (len < dp[i]) {
-            len = dp[i];
-            idx = i;
-        }
-    }
-
-    vector<int> lis;
-    while (idx != -1) {
-        lis.push_back(arr[idx]);
-        idx = prev[idx];
-    }
-
-    reverse(lis.begin(), lis.end());
-
-    cout << len << endl;
-    for (int ans : lis) {
-        cout << ans << " ";
-    }
+    lis(arr);
 }
