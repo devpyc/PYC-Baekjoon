@@ -1,51 +1,43 @@
-// LIS
-
-#include <iostream>
-#include <vector>
-#include <algorithm>
-
+#include <bits/stdc++.h>
 using namespace std;
 
+void lis(const vector<int>&arr) {
+    vector<int>b,pre(arr.size(),-1),idx;
+    for (int i=0; i<arr.size(); i++) {
+        auto it=lower_bound(b.begin(),b.end(),arr[i]);
+        int k=it-b.begin();
+
+        if (it==b.end()) {
+            b.push_back(arr[i]);
+            idx.push_back(i);
+        }else {
+            *it=arr[i];
+            idx[k]=i;
+        }
+
+        if (k>0) pre[i]=idx[k-1];
+    }
+
+    vector<int>ans;
+    for (int i=idx.back(); i!=-1; i=pre[i]) {
+        ans.push_back(arr[i]);
+    }
+    reverse(ans.begin(),ans.end());
+    cout<<ans.size()<<"\n";
+    for (int i:ans) {
+        cout<<i<<" ";
+    }
+}
+
 int main() {
-    int N;
-    cin >> N;
+    cin.tie(0)->sync_with_stdio(0);
 
-    vector<int> A(N);
-    vector<int> LIS;  // LIS 구성하는 수열
-    vector<pair<int, int>> trace;  // 인덱스 이동 기록
+    int n;
+    cin>>n;
 
-    for (int i = 0; i < N; ++i) {
-        cin >> A[i];
-        auto it = lower_bound(LIS.begin(), LIS.end(), A[i]);
-
-        if (it == LIS.end()) {
-            // 현재 수가 LIS의 끝보다 크다면 LIS에 추가
-            LIS.push_back(A[i]);
-            trace.push_back({LIS.size() - 1, i});
-        } else {
-            // 현재 수가 LIS의 어떤 위치에 들어가야 한다면 해당 위치에 값 갱신
-            *it = A[i];
-            trace.push_back({it - LIS.begin(), i});
-        }
+    vector<int>arr(n);
+    for (int i=0; i<n; i++) {
+        cin>>arr[i];
     }
-
-    // LIS 길이 출력
-    cout << LIS.size() << '\n';
-
-    // LIS 출력
-    vector<int> result;
-    int idx = LIS.size() - 1;
-
-    // trace 역추적
-    for (int i = N - 1; i >= 0; --i) {
-        if (trace[i].first == idx) {
-            result.push_back(A[trace[i].second]);
-            idx--;
-        }
-    }
-    // 역순 출력
-    for (int i = result.size() - 1; i >= 0; --i) {
-        cout << result[i] << ' ';
-    }
-    return 0;
+    lis(arr);
 }
