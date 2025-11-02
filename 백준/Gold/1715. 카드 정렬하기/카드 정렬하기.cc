@@ -1,28 +1,32 @@
-#include <iostream>
-#include <queue>
-#include <vector>
-#include <algorithm>
-
+#include <bits/stdc++.h>
 using namespace std;
 
+bool comp(pair<int,int>a,pair<int,int>b) {
+    if (a.second==b.second) return a.first<b.first;
+    return a.second<b.second;
+}
+
 int main() {
+    cin.tie(0)->sync_with_stdio(0);
+
     int n;
-    cin >> n;
-    priority_queue<int, vector<int>, greater<int>> pq;
-    for (int i = 0; i < n; i++) {
-        int num;
-        cin >> num;
-        pq.push(num);
+    cin>>n;
+    priority_queue<long long,vector<long long>,greater<long long>>pq;
+    for (int i=0; i<n; i++) {
+        long long x;
+        cin>>x;
+        pq.push(x);
     }
-    int answer = 0;
-    while (pq.size() > 1) {
-        int a = pq.top();
+
+    long long ans=0;
+    while (pq.size()>1) {
+        long long a=pq.top();
         pq.pop();
-        int b = pq.top();
+        long long b=pq.top();
         pq.pop();
-        answer += a + b;
-        pq.push(a + b);
+        long long sum=a+b;
+        ans+=sum;
+        pq.push(sum);
     }
-    cout << answer;
-    return 0;
+    cout<<ans;
 }
