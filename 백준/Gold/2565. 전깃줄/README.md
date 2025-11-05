@@ -12,7 +12,7 @@
 
 ### 제출 일자
 
-2024년 11월 10일 16:33:57
+2025년 11월 6일 01:14:56
 
 ### 문제 설명
 
@@ -20,7 +20,7 @@
 
 <p>예를 들어, < 그림 1 >과 같이 전깃줄이 연결되어 있는 경우 A의 1번 위치와 B의 8번 위치를 잇는 전깃줄, A의 3번 위치와 B의 9번 위치를 잇는 전깃줄, A의 4번 위치와 B의 1번 위치를 잇는 전깃줄을 없애면 남아있는 모든 전깃줄이 서로 교차하지 않게 된다.</p>
 
-<p style="text-align: center;"><img alt="" src="" style="width: 183px; height: 288px;"></p>
+<p style="text-align: center;"><img alt="" src="https://upload.acmicpc.net/d90221dd-eb80-419f-bdfb-5dd4ebac23af/-/preview/" style="width: 183px; height: 288px;"></p>
 
 <p style="text-align: center;">< 그림 1 ></p>
 
