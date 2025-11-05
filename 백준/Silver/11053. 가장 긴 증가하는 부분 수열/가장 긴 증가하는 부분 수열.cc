@@ -1,14 +1,14 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int lis(const vector<int>&arr) {
+int LIS(vector<int>&arr) {
     vector<int>lis;
-    for (int x:arr) {
-        auto it=std::lower_bound(lis.begin(),lis.end(),x);
-        if (it==lis.end()) lis.push_back(x);
-        else *it=x;
+    for (int i:arr) {
+        auto it=lower_bound(lis.begin(),lis.end(),i);
+        if (it==lis.end()) lis.push_back(i);
+        else *it=i;
     }
-    return static_cast<int>(lis.size());
+    return (int)lis.size();
 }
 
 int main() {
@@ -20,5 +20,5 @@ int main() {
     for (int i=0; i<n; i++) {
         cin>>arr[i];
     }
-    cout<<lis(arr);
+    cout<<LIS(arr);
 }
