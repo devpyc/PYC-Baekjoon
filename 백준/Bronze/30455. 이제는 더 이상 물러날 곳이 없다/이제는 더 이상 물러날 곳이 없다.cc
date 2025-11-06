@@ -1,10 +1,2 @@
-#include <bits/stdc++.h>
-using namespace std;
-
-int main() {
-    cin.tie(0)->sync_with_stdio(0);
-
-    int n;
-    cin>>n;
-    cout<<(n%2==0?"Duck":"Goose");
-}
+#include <iostream>
+int main(){int n;std::cin>>n;std::cout<<(n%2==0?"Duck":"Goose");}
