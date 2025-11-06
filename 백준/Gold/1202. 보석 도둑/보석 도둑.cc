@@ -1,56 +1,39 @@
-#include <iostream>
-#include <set>
-#include <climits>
-#include <iterator>
-#include <algorithm>
-
+#include <bits/stdc++.h>
 using namespace std;
 
-#define w first
-#define v second
-#define MAX 300010
-
-multiset<pair<int, int>> gems;
-multiset<int> avail;
-int bags[MAX];
-
 int main() {
-    ios::sync_with_stdio(0);
-    cin.tie(0);
+    cin.tie(0)->sync_with_stdio(0);
 
-    int n, k;
-    cin >> n >> k;
-
-    for (int i = 0; i < n; i++) {
-        pair<int, int> gem;
-        cin >> gem.w >> gem.v;
-        gems.insert(gem);
+    int n,k;
+    cin>>n>>k;
+    priority_queue<pair<int,int>,vector<pair<int,int>>,greater<>>pq;
+    for (int i=0; i<n; i++) {
+        int m,v;
+        cin>>m>>v;
+        pq.push({m,v});
     }
 
-    for (int i = 0; i < k; i++)
-        cin >> bags[i];
-
-    sort(bags, bags + k);
-
-    long long ans = 0;
-
-    for (int i = 0; i < k; i++) {
-        int cap = bags[i];
-        auto upper = gems.upper_bound({cap, INT_MAX});
-
-        for (auto iter = gems.begin(); iter != upper;) {
-            avail.insert((*iter).v);
-            iter = gems.erase(iter);
-        }
-
-        if (avail.size() > 0) {
-            int m = *prev(avail.end());
-            avail.erase(prev(avail.end()));
-            ans += m;
-        }
+    priority_queue<int,vector<int>,greater<>>c;
+    for (int i=0; i<k; i++) {
+        int x;
+        cin>>x;
+        c.push(x);
     }
 
-    cout << ans << "\n";
+    long long sum=0;
+    priority_queue<int>q;
+    while (!c.empty()) {
+        int x=c.top();
+        c.pop();
 
-    return 0;
+        while (!pq.empty()&&pq.top().first<=x) {
+            q.push(pq.top().second);
+            pq.pop();
+        }
+        if (!q.empty()) {
+            sum+=q.top();
+            q.pop();
+        }
+    }
+    cout<<sum;
 }
