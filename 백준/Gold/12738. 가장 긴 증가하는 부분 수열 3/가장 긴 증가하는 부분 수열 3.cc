@@ -1,35 +1,24 @@
-#include <iostream>
-#include <vector>
-#include <algorithm>
+#include <bits/stdc++.h>
 using namespace std;
 
+int lis(vector<int>&arr) {
+    vector<int>lis;
+    for (int x:arr) {
+        auto it=lower_bound(lis.begin(),lis.end(),x);
+        if (it==lis.end()) lis.push_back(x);
+        else *it=x;
+    }
+    return static_cast<int>(lis.size());
+}
+
 int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(nullptr);
+    cin.tie(0)->sync_with_stdio(0);
 
     int n;
-    cin >> n;
-
-    vector<long long> arr(n);
-    vector<long long> LIS;
-
-    for(int i = 0; i < n; i++) {
-        cin >> arr[i];
+    cin>>n;
+    vector<int>arr(n);
+    for (int i=0; i<n; i++) {
+        cin>>arr[i];
     }
-
-    LIS.push_back(arr[0]);
-
-    for(int i = 1; i < n; i++) {
-        if(LIS.back() < arr[i]) {
-            LIS.push_back(arr[i]);
-        }
-        else {
-            int pos = lower_bound(LIS.begin(), LIS.end(), arr[i]) - LIS.begin();
-            LIS[pos] = arr[i];
-        }
-    }
-
-    cout << LIS.size() << '\n';
-
-    return 0;
+    cout<<lis(arr);
 }
