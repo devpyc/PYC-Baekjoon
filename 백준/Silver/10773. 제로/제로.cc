@@ -2,23 +2,23 @@
 using namespace std;
 
 int main() {
-    int n;
-    cin>>n;
+    cin.tie(0)->sync_with_stdio(0);
+
+    int k;
+    cin>>k;
 
     stack<int>st;
-    for(int i=0; i<n; i++) {
+    while (k--) {
         int x;
         cin>>x;
-        if(x==0) {
-            st.pop();
-        }else {
-            st.push(x);
-        }
+        if (x!=0) st.push(x);
+        else st.pop();
     }
-    int ans=0;
-    while(!st.empty()) {
-        ans+=st.top();
+    int sum=0;
+
+    while (!st.empty()) {
+        sum+=st.top();
         st.pop();
     }
-    cout<<ans;
+    cout<<sum;
 }
