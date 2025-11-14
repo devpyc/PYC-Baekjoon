@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int LIS(vector<int>&arr) {
+int lis(vector<int>&arr) {
     vector<int>lis;
     for (int i:arr) {
         auto it=lower_bound(lis.begin(),lis.end(),i);
@@ -16,9 +16,10 @@ int main() {
 
     int n;
     cin>>n;
+
     vector<int>arr(n);
     for (int i=0; i<n; i++) {
         cin>>arr[i];
     }
-    cout<<LIS(arr);
+    cout<<lis(arr);
 }
