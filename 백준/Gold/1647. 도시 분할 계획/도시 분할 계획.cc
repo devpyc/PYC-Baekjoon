@@ -1,63 +1,69 @@
-#include <iostream>
-#include <vector>
-#include <algorithm>
-
+#include <bits/stdc++.h>
 using namespace std;
 
-struct Edge {
-    int u, v, cost;
+vector<int>parent;
 
-    bool operator<(const Edge& other) const {
-        return cost < other.cost;
+int find(int x) {
+    if (parent[x]==x) return x;
+    else return parent[x]=find(parent[x]);
+}
+
+void unite(int a, int b) {
+    a=find(a);
+    b=find(b);
+    if (a!=b) parent[b]=a;
+}
+
+bool same(int a, int b) {
+    return find(a)==find(b);
+}
+
+class Edge {
+public:
+    int first;
+    int second;
+    int dist;
+    Edge(int a, int b, int c) {
+        first=a;
+        second=b;
+        dist=c;
+    }
+    bool operator<(const Edge &edge) const {
+        return dist<edge.dist;
     }
 };
 
-vector<int> parent;
-
-int findParent(int node) {
-    if (parent[node] == node)
-        return node;
-
-    return parent[node] = findParent(parent[node]);
-}
-
-void unionSets(int u, int v) {
-    int rootU = findParent(u);
-    int rootV = findParent(v);
-
-    if (rootU != rootV)
-        parent[rootU] = rootV;
-}
-
 int main() {
-    int N, M;
-    cin >> N >> M;
+    cin.tie(0)->sync_with_stdio(0);
 
-    vector<Edge> edges(M);
+    int n,m;
+    cin>>n>>m;
 
-    for (int i = 0; i < M; ++i) {
-        cin >> edges[i].u >> edges[i].v >> edges[i].cost;
+    parent.resize(n+1);
+    for (int i=1; i<=n; i++) {
+        parent[i]=i;
     }
 
-    sort(edges.begin(), edges.end());
+    vector<Edge>v;
+    v.reserve(m);
 
-    parent.resize(N + 1);
-    for (int i = 1; i <= N; ++i) {
-        parent[i] = i;
+    for (int i=0; i<m; i++) {
+        int a,b,c;
+        cin>>a>>b>>c;
+        v.emplace_back(a,b,c);
     }
 
-    int totalCost = 0;
-    int maxEdgeCost = 0;
-
-    for (const Edge& edge : edges) {
-        if (findParent(edge.u) != findParent(edge.v)) {
-            unionSets(edge.u, edge.v);
-            totalCost += edge.cost;
-            maxEdgeCost = max(maxEdgeCost, edge.cost);
+    sort(v.begin(),v.end());
+    vector<Edge>mst;
+    int ans=0;
+    int MAX=0;
+    for (auto &edge:v) {
+        if (!same(edge.first,edge.second)) {
+            unite(edge.first,edge.second);
+            mst.push_back(edge);
+            ans+=edge.dist;
+            MAX=max(MAX,edge.dist);
         }
     }
-    // 최소 스패닝 트리의 총 비용에서 가장 큰 간선의 비용을 뺀 값이 답
-    cout << totalCost - maxEdgeCost << '\n';
-
-    return 0;
+    cout<<ans-MAX;
 }
