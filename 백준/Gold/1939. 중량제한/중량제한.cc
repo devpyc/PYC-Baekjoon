@@ -1,75 +1,63 @@
-// 이분 탐색 + BFS
-
-#include <iostream>
-#include <vector>
-#include <queue>
-#include <algorithm>
-
+#include <bits/stdc++.h>
 using namespace std;
 
-vector<pair<int, int>> adj[10001]; // 각 섬에서 연결된 다리 정보 (다리의 도착지와 중량)
+vector<int>parent;
 
-bool bfs(int start, int end, int weight, int n) {
-    vector<bool> visited(n + 1, false);
-    queue<int> q;
-
-    visited[start] = true;
-    q.push(start);
-
-    while (!q.empty()) {
-        int current = q.front();
-        q.pop();
-
-        for (const auto& edge : adj[current]) {
-            int next = edge.first;
-            int nextWeight = edge.second;
-
-            if (!visited[next] && nextWeight >= weight) {
-                visited[next] = true;
-                q.push(next);
-
-                if (next == end) {
-                    return true; // 도착지에 도달 가능
-                }
-            }
-        }
-    }
-
-    return false; // 도착지에 도달할 수 없음
+int find(int x) {
+    if (parent[x]==x) return x;
+    else return parent[x]=find(parent[x]);
 }
 
+void unite(int x, int y) {
+    x=find(x);
+    y=find(y);
+    if (x!=y) parent[y]=x;
+}
+
+bool same(int x, int y) {
+    return find(x)==find(y);
+}
+
+class Edge {
+public:
+    int u,v,w;
+    Edge(int u, int v, int w) :u(u),v(v),w(w){}
+
+    bool operator<(const Edge &W) const {
+        return w>W.w;
+    }
+};
+
 int main() {
-    int n, m;
-    cin >> n >> m;
+    cin.tie(0)->sync_with_stdio(0);
 
-    int maxWeight = 0;
+    int n,m;
+    cin>>n>>m;
 
-    for (int i = 0; i < m; ++i) {
-        int a, b, c;
-        cin >> a >> b >> c;
-        adj[a].push_back({b, c});
-        adj[b].push_back({a, c});
-        maxWeight = max(maxWeight, c);
+    vector<Edge>arr;
+    arr.reserve(m);
+
+    for (int i=0; i<m; i++) {
+        int a,b,c;
+        cin>>a>>b>>c;
+        arr.emplace_back(a,b,c);
     }
 
-    int start, end;
-    cin >> start >> end;
+    int x,y;
+    cin>>x>>y;
 
-    int left = 1;
-    int right = maxWeight;
-    int result = 0;
+    parent.resize(n+1);
+    for (int i=1; i<=n; i++) {
+        parent[i]=i;
+    }
 
-    while (left <= right) {
-        int mid = (left + right) / 2;
+    sort(arr.begin(),arr.end());
 
-        if (bfs(start, end, mid, n)) {
-            result = mid;
-            left = mid + 1;
-        } else {
-            right = mid - 1;
+    for (auto &i:arr) {
+        unite(i.u,i.v);
+        if (same(x,y)) {
+            cout<<i.w<<"\n";
+            return 0;
         }
     }
-    cout << result << endl;
-
-    return 0;
 }
