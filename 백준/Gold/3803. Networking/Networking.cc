@@ -29,6 +29,7 @@ public:
 
 int main() {
     cin.tie(0)->sync_with_stdio(0);
+
     while (true) {
         int n,m;
         cin>>n;
@@ -47,14 +48,14 @@ int main() {
             cin>>a>>b>>c;
             arr.emplace_back(a,b,c);
         }
-
         sort(arr.begin(),arr.end());
 
-        int ans=0;
+        int ans=0,MAX=0;
         for (auto i:arr) {
             if (!same(i.u,i.v)) {
                 unite(i.u,i.v);
                 ans+=i.w;
+                MAX=max(MAX,i.w);
             }
         }
         cout<<ans<<"\n";
