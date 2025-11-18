@@ -22,7 +22,6 @@ class Edge {
 public:
     int u,v,w;
     Edge(int u, int v, int w) :u(u),v(v),w(w){}
-
     bool operator<(const Edge &edge) const {
         return w<edge.w;
     }
@@ -35,8 +34,7 @@ int main() {
     cin>>n>>m;
 
     parent.resize(n+1);
-
-    for (int i=1; i<=n ;i++) {
+    for (int i=1; i<=n; i++) {
         parent[i]=i;
     }
 
@@ -47,9 +45,9 @@ int main() {
         cin>>a>>b>>c;
         arr.emplace_back(a,b,c);
     }
+    sort(arr.begin(),arr.end());
 
     int ans=0,MAX=0;
-    sort(arr.begin(),arr.end());
     for (auto i:arr) {
         if (!same(i.u,i.v)) {
             unite(i.u,i.v);
