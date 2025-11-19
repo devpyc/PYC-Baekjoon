@@ -1,58 +1,45 @@
-#include <iostream>
-#include <vector>
-#include <queue>
-#include <climits>
-
+#include <bits/stdc++.h>
 using namespace std;
 
-const int INF = INT_MAX;
+vector<int>dijkstra(vector<vector<pair<int,int>>>&arr, int src) {
+    const int INF=1e9;
+    int n=arr.size();
+    vector<int>dist(n,INF);
+    priority_queue<pair<int,int>,vector<pair<int,int>>,greater<>>pq;
 
-vector<vector<pair<int, int>>> graph;
-vector<int> dist;
-
-void dijkstra(int start) {
-    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
-    pq.push({0, start});
-    dist[start] = 0;
+    dist[src]=0;
+    pq.emplace(0,src);
 
     while (!pq.empty()) {
-        int cost = pq.top().first;
-        int current = pq.top().second;
+        auto [d,u]=pq.top();
         pq.pop();
+        if (d>dist[u]) continue;
 
-        if (dist[current] < cost) continue;
-
-        for (const auto& edge : graph[current]) {
-            int next = edge.first;
-            int nextCost = cost + edge.second;
-
-            if (nextCost < dist[next]) {
-                dist[next] = nextCost;
-                pq.push({nextCost, next});
+        for (auto &[v,w]:arr[u]) {
+            if (dist[u]+w<dist[v]) {
+                dist[v]=dist[u]+w;
+                pq.emplace(dist[v],v);
             }
         }
     }
+    return dist;
 }
 
 int main() {
-    int N, M;
-    cin >> N >> M;
+    cin.tie(0)->sync_with_stdio(0);
 
-    graph.resize(N + 1);
-    dist.assign(N + 1, INF);
+    int n,m;
+    cin>>n>>m;
 
-    for (int i = 0; i < M; ++i) {
-        int start, end, cost;
-        cin >> start >> end >> cost;
-        graph[start].push_back({end, cost});
+    vector<vector<pair<int,int>>>arr(n+1);
+
+    for (int i=0; i<m; i++) {
+        int a,b,c;
+        cin>>a>>b>>c;
+        arr[a].push_back({b,c});
     }
-
-    int start, end;
-    cin >> start >> end;
-
-    dijkstra(start);
-
-    cout << dist[end] << endl;
-
-    return 0;
+    int s,d;
+    cin>>s>>d;
+    auto dist=dijkstra(arr,s);
+    cout<<dist[d];
 }
