@@ -8,20 +8,20 @@ int find(int x) {
     else return parent[x]=find(parent[x]);
 }
 
-void unite(int a, int b) {
-    a=find(a);
-    b=find(b);
-    if (a!=b) parent[b]=a;
+void Union(int x, int y) {
+    x=find(x);
+    y=find(y);
+    if (x!=y) parent[y]=x;
 }
 
-bool same(int a, int b) {
-    return find(a)==find(b);
+bool same(int x,int y) {
+    return find(x)==find(y);
 }
 
 class Edge {
 public:
     int u,v,w;
-    Edge(int u, int v, int w) :u(u),v(v),w(w){}
+    Edge(int u, int v, int w):u(u),v(v),w(w){}
     bool operator<(const Edge &edge) const {
         return w<edge.w;
     }
@@ -33,7 +33,7 @@ int main() {
     while (true) {
         int n,m;
         cin>>n>>m;
-        if (n==0&&m==0) return 0;
+        if (!(n+m)) return 0;
 
         parent.resize(n);
         for (int i=0; i<n; i++) {
@@ -41,22 +41,20 @@ int main() {
         }
 
         vector<Edge>arr;
-        arr.reserve(m);
 
-        long long sum=0;
-        for (int i=0; i<m; i++) {
+        int sum=0;
+        while (m--) {
             int a,b,c;
             cin>>a>>b>>c;
             arr.emplace_back(a,b,c);
             sum+=c;
         }
-
         sort(arr.begin(),arr.end());
 
-        long long ans=0;
-        for (auto &i:arr) {
+        int ans=0;
+        for (auto i:arr) {
             if (!same(i.u,i.v)) {
-                unite(i.u,i.v);
+                Union(i.u,i.v);
                 ans+=i.w;
             }
         }
