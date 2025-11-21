@@ -3,33 +3,28 @@ using namespace std;
 
 vector<int>parent;
 
-int find(int x) {
+int Find(int x) {
     if (parent[x]==x) return x;
-    else return parent[x]=find(parent[x]);
+    else return parent[x]=Find(parent[x]);
 }
 
-void unite(int a, int b) {
-    a=find(a);
-    b=find(b);
-    if (a!=b) parent[b]=a;
+void Union(int x, int y) {
+    x=Find(x);
+    y=Find(y);
+    if (x!=y) parent[y]=x;
 }
 
-bool same(int a, int b) {
-    return find(a)==find(b);
+bool same(int x, int y) {
+    return Find(x)==Find(y);
 }
 
 class Edge {
 public:
-    int first;
-    int second;
-    int dist;
-    Edge(int a, int b, int c) {
-        first=a;
-        second=b;
-        dist=c;
-    }
+    int u,v,w;
+    Edge(int u, int v, int w) :u(u),w(w),v(v){}
+
     bool operator<(const Edge &edge) const {
-        return dist<edge.dist;
+        return w<edge.w;
     }
 };
 
@@ -44,23 +39,22 @@ int main() {
         parent[i]=i;
     }
 
-    vector<Edge>v;
-    v.reserve(m);
+    vector<Edge>arr;
 
-    for (int i=0; i<m; i++) {
-        int a,b,c;
-        cin>>a>>b>>c;
-        v.emplace_back(a,b,c);
+    while (m--) {
+        int u,v,w;
+        cin>>u>>v>>w;
+        arr.emplace_back(u,v,w);
     }
 
-    sort(v.begin(),v.end());
-    vector<Edge>mst;
+    sort(arr.begin(),arr.end());
+
     int ans=0;
-    for (auto &edge:v) {
-        if (!same(edge.first,edge.second)) {
-            unite(edge.first,edge.second);
-            mst.push_back(edge);
-            ans+=edge.dist;
+
+    for (auto i:arr) {
+        if (!same(i.u,i.v)) {
+            Union(i.u,i.v);
+            ans+=i.w;
         }
     }
     cout<<ans;
