@@ -8,20 +8,20 @@ int find(int x) {
     else return parent[x]=find(parent[x]);
 }
 
-void unite(int x, int y) {
+void Union(int x, int y) {
     x=find(x);
     y=find(y);
     if (x!=y) parent[y]=x;
 }
 
-bool same(int x, int y) {
+bool same(int x,int y) {
     return find(x)==find(y);
 }
 
 class Edge {
 public:
     int u,v,w;
-    Edge(int u, int v, int w) :u(u),v(v),w(w){}
+    Edge(int u, int v, int w):u(u),v(v),w(w){}
     bool operator<(const Edge &edge) const {
         return w<edge.w;
     }
@@ -47,13 +47,12 @@ int main() {
     }
     sort(arr.begin(),arr.end());
 
-    int ans=0,MAX=0;
+    int ans=0;
     for (auto i:arr) {
         if (!same(i.u,i.v)) {
-            unite(i.u,i.v);
-            ans+=i.w;
-            MAX=max(MAX,i.w);
+            Union(i.u,i.v);
+            ans=max(ans,i.w);
         }
     }
-    cout<<MAX;
+    cout<<ans;
 }
