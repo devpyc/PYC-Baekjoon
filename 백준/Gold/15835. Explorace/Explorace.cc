@@ -32,10 +32,9 @@ int main() {
 
     int t;
     cin>>t;
-    for (int tc=1; tc<=t; tc++) {
+    for (int i=1; i<=t; i++) {
         int n,m;
         cin>>n>>m;
-
         parent.resize(n+1);
         for (int i=1; i<=n; i++) {
             parent[i]=i;
@@ -43,21 +42,22 @@ int main() {
 
         vector<Edge>arr;
 
+        int sum=0;
         while (m--) {
             int a,b,c;
             cin>>a>>b>>c;
             arr.emplace_back(a,b,c);
+            sum+=c;
         }
+
         sort(arr.begin(),arr.end());
-
-        int ans=0;
-
+        int ans=0,cnt=0;
         for (auto i:arr) {
             if (!same(i.u,i.v)) {
                 unite(i.u,i.v);
                 ans+=i.w;
             }
         }
-        cout<<"Case #"<<tc<<": "<<ans<<" meters\n";
+        cout<<"Case #"<<i<<": "<<ans<<" meters\n";
     }
 }
