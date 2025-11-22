@@ -8,28 +8,22 @@ int find(int x) {
     else return parent[x]=find(parent[x]);
 }
 
-void unite(int a, int b) {
-    a=find(a);
-    b=find(b);
-    if (a!=b) parent[b]=a;
+void unite(int x, int y) {
+    x=find(x);
+    y=find(y);
+    if (x!=y) parent[y]=x;
 }
 
-bool same(int a, int b) {
-    return find(a)==find(b);
+bool same(int x, int y) {
+    return find(x)==find(y);
 }
 
 class Edge {
 public:
-    int first;
-    int second;
-    int dist;
-    Edge(int a, int b, int c) {
-        first=a;
-        second=b;
-        dist=c;
-    }
+    int u,v,w;
+    Edge(int u, int v, int w) :u(u),v(v),w(w){}
     bool operator<(const Edge &edge) const {
-        return dist<edge.dist;
+        return w<edge.w;
     }
 };
 
@@ -44,26 +38,22 @@ int main() {
         parent[i]=i;
     }
 
-    vector<Edge>v;
-    v.reserve(m);
+    vector<Edge>arr;
 
-    for (int i=0; i<m; i++) {
+    while (m--) {
         int a,b,c;
         cin>>a>>b>>c;
-        v.emplace_back(a,b,c);
+        arr.emplace_back(a,b,c);
     }
 
-    sort(v.begin(),v.end());
-    vector<Edge>mst;
-    int ans=0;
-    int MAX=0;
-    for (auto &edge:v) {
-        if (!same(edge.first,edge.second)) {
-            unite(edge.first,edge.second);
-            mst.push_back(edge);
-            ans+=edge.dist;
-            MAX=max(MAX,edge.dist);
+    sort(arr.begin(),arr.end());
+    int ans=0,cnt=0;
+    for (auto i:arr) {
+        if (!same(i.u,i.v)) {
+            unite(i.u,i.v);
+            ans+=i.w;
+            cnt=max(cnt,i.w);
         }
     }
-    cout<<ans-MAX;
+    cout<<ans-cnt;
 }
