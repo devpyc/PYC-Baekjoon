@@ -1,73 +1,51 @@
-#include <iostream>
-#include <vector>
-#include <queue>
-#include <climits>
-
+#include <bits/stdc++.h>
 using namespace std;
 
-const int INF = INT_MAX;
-
-struct Edge {
-    int to, cost;
-    Edge(int _to, int _cost) : to(_to), cost(_cost) {}
-};
-
-void dijkstra(int start, vector<int>& items, vector<vector<Edge>>& graph, vector<int>& dist) {
-    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
-    pq.push({0, start});
-    dist[start] = 0;
-
-    while (!pq.empty()) {
-        int current = pq.top().second;
-        int cost = pq.top().first;
-        pq.pop();
-
-        if (cost > dist[current]) continue;
-
-        for (const Edge& edge : graph[current]) {
-            int next = edge.to;
-            int nextCost = cost + edge.cost;
-
-            if (nextCost < dist[next]) {
-                dist[next] = nextCost;
-                pq.push({nextCost, next});
-            }
-        }
-    }
-}
-
+const int INF = 1e9;
 int main() {
-    int n, m, r;
+    cin.tie(0)->sync_with_stdio(0);
+
+    int n,m,r;
     cin >> n >> m >> r;
 
-    vector<int> items(n + 1);
-    vector<vector<Edge>> graph(n + 1);
+    vector<int> items(n+1);
+    for(int i=1;i<=n;i++) cin >> items[i];
 
-    for (int i = 1; i <= n; ++i) {
-        cin >> items[i];
-    }
-
-    for (int i = 0; i < r; ++i) {
-        int a, b, l;
+    vector<vector<pair<int,int>>> graph(n+1);
+    for(int i=0;i<r;i++){
+        int a,b,l;
         cin >> a >> b >> l;
-        graph[a].emplace_back(b, l);
-        graph[b].emplace_back(a, l);
+        graph[a].push_back({b,l});
+        graph[b].push_back({a,l});
     }
 
-    int result = 0;
-    for (int i = 1; i <= n; ++i) {
-        vector<int> dist(n + 1, INF);
-        dijkstra(i, items, graph, dist);
+    int ans = 0;
 
-        int total = 0;
-        for (int j = 1; j <= n; ++j) {
-            if (dist[j] <= m) {
-                total += items[j];
+    for(int start=1; start<=n; start++){
+        vector<int> dist(n+1, INF);
+        priority_queue<pair<int,int>, vector<pair<int,int>>, greater<>> pq;
+
+        dist[start] = 0;
+        pq.push({0, start});
+
+        while(!pq.empty()){
+            auto [d, u] = pq.top();
+            pq.pop();
+            if(d > dist[u]) continue;
+
+            for(auto &[v, w] : graph[u]){
+                if(dist[v] > dist[u] + w){
+                    dist[v] = dist[u] + w;
+                    pq.push({dist[v], v});
+                }
             }
         }
-        result = max(result, total);
-    }
-    cout << result << endl;
 
-    return 0;
+        int sum = 0;
+        for(int i=1; i<=n; i++){
+            if(dist[i] <= m) sum += items[i];
+        }
+        ans = max(ans, sum);
+    }
+    cout << ans;
 }
