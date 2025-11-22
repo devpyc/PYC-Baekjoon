@@ -1,49 +1,36 @@
-#include <iostream>
-#include <vector>
-#include <algorithm>
-
+#include <bits/stdc++.h>
+#define INF 987654321
 using namespace std;
 
-const int INF = 1e9; // 무한대 값으로 사용할 상수
-
 int main() {
-    int n, m;
-    cin >> n >> m;
+    cin.tie(0)->sync_with_stdio(0);
 
-    // 그래프의 초기화
-    vector<vector<int>> graph(n + 1, vector<int>(n + 1, INF));
+    int n,m;
+    cin>>n>>m;
 
-    // 자기 자신으로 가는 비용은 0으로 초기화
-    for (int i = 1; i <= n; ++i) {
-        graph[i][i] = 0;
+    vector<vector<int>>dist(n+1,vector<int>(n+1,INF));
+    for (int i=0; i<m; i++) {
+        int a,b,c;
+        cin>>a>>b>>c;
+        if (dist[a][b]>c) dist[a][b]=c;
     }
 
-    // 간선 정보 입력
-    for (int i = 0; i < m; ++i) {
-        int a, b, c;
-        cin >> a >> b >> c;
-        graph[a][b] = min(graph[a][b], c);
+    for (int i=1; i<=n; i++) {
+        dist[i][i]=0;
     }
 
-    // 플로이드-와샬 알고리즘
-    for (int k = 1; k <= n; ++k) {
-        for (int i = 1; i <= n; ++i) {
-            for (int j = 1; j <= n; ++j) {
-                graph[i][j] = min(graph[i][j], graph[i][k] + graph[k][j]);
+    for (int k=1; k<=n; k++) {
+        for (int i=1; i<=n; i++) {
+            for (int j=1; j<=n; j++) {
+                dist[i][j]=min(dist[i][j],dist[i][k]+dist[k][j]);
             }
         }
     }
 
-    // 결과 출력
-    for (int i = 1; i <= n; ++i) {
-        for (int j = 1; j <= n; ++j) {
-            if (graph[i][j] == INF) {
-                cout << "0 ";
-            } else {
-                cout << graph[i][j] << " ";
-            }
+    for (int i=1; i<=n; i++) {
+        for (int j=1; j<=n; j++) {
+            cout<<(dist[i][j]==INF?0:dist[i][j])<<" ";
         }
-        cout << endl;
+        cout<<"\n";
     }
-    return 0;
 }
