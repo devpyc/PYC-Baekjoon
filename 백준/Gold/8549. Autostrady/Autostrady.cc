@@ -45,15 +45,15 @@ int main() {
         cin>>a>>b>>c;
         arr.emplace_back(a,b,c);
     }
-    sort(arr.begin(),arr.end());
 
-    int ans=0,MAX=0;
+    sort(arr.begin(),arr.end());
+    int ans=0,cnt=0;
     for (auto i:arr) {
         if (!same(i.u,i.v)) {
             unite(i.u,i.v);
             ans+=i.w;
-            MAX=max(MAX,i.w);
+            cnt=max(cnt,i.w);
         }
     }
-    cout<<MAX;
+    cout<<cnt;
 }
