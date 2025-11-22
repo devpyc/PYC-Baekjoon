@@ -3,12 +3,12 @@ using namespace std;
 
 int lis(vector<int>&arr) {
     vector<int>lis;
-    for (int x:arr) {
-        auto it=lower_bound(lis.begin(),lis.end(),x);
-        if (it==lis.end()) lis.push_back(x);
-        else *it=x;
+    for (int i:arr) {
+        auto it=lower_bound(lis.begin(),lis.end(),i);
+        if (it==lis.end()) lis.push_back(i);
+        else *it=i;
     }
-    return static_cast<int>(lis.size());
+    return lis.size();
 }
 
 int main() {
@@ -16,14 +16,13 @@ int main() {
 
     int t;
     cin>>t;
-    for (int i=1; i<=t; i++) {
-        int n,k;
-        cin>>n>>k;
+    for (int tc=1; tc<=t; tc++) {
+        int n,m;
+        cin>>n>>m;
         vector<int>arr(n);
         for (int i=0; i<n; i++) {
             cin>>arr[i];
         }
-        int ans=lis(arr);
-        cout<<"Case #"<<i<<"\n"<<(ans>=k)<<"\n";
+        cout<<"Case #"<<tc<<"\n"<<(lis(arr)>=m)<<"\n";
     }
 }
