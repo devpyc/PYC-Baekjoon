@@ -1,44 +1,25 @@
-#include <iostream>
-#include <vector>
+#include <bits/stdc++.h>
 using namespace std;
 
-int N;
-int answer = 0;
-vector<int> col;
+int n,ans;
 
-bool isSafe(int row, int c) {
-    for (int prev = 0; prev < row; prev++) {
-        // 같은 열이거나 대각선에 위치한 퀸이 있는 경우
-        if (col[prev] == c || abs(col[prev] - c) == row - prev)
-            return false;
-    }
-    return true;
-}
-void solve(int row) {
-    if (row == N) {
-        // 마지막 행까지 퀸을 배치한 경우
-        answer++;
+void solve(int r, int c, int d1, int d2) {
+    if (r==n) {
+        ans++;
         return;
     }
-
-    for (int c = 0; c < N; c++) {
-        if (isSafe(row, c)) {
-            col[row] = c;  // 현재 행에 퀸을 배치
-            solve(row + 1);  // 다음 행으로 이동
-        }
+    int res=((1<<n)-1)&~(c|d1|d2);
+    while (res) {
+        int i=res&-res;
+        res-=i;
+        solve(r+1,c|i,(d1|i)<<1,(d2|i)>>1);
     }
 }
+
 int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(0);
-    cout.tie(0);
-    
-    cin >> N;
-    col.resize(N);
+    cin.tie(0)->sync_with_stdio(0);
 
-    solve(0);  // 첫 번째 행부터 시작
-
-    cout << answer << "\n";
-
-    return 0;
+    cin>>n;
+    solve(0,0,0,0);
+    cout<<ans;
 }
