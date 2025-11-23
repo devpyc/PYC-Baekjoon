@@ -12,7 +12,7 @@
 
 ### 제출 일자
 
-2024년 1월 31일 20:11:53
+2025년 11월 23일 11:32:33
 
 ### 문제 설명
 
@@ -26,7 +26,7 @@
 
 <p>다른 예를 들어 그림으로 표현하면 <code>A+B*C-D/E</code>를 완전하게 괄호로 묶고 연산자를 이동시킬 장소를 표시하면 다음과 같이 된다.</p>
 
-<p style="text-align: center;"><img alt="" src="" style="width: 166px; height: 50px;"></p>
+<p style="text-align: center;"><img alt="" src="https://upload.acmicpc.net/5aad2feb-d9fc-430a-954d-73a06ba0215f/-/preview/" style="width: 166px; height: 50px;"></p>
 
 <p style="text-align: center;">결과: <code>ABC*+DE/-</code></p>
 

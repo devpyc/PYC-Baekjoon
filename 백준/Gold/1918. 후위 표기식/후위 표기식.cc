@@ -1,54 +1,41 @@
-#include <iostream>
-#include <stack>
-#include <string>
-
+#include <bits/stdc++.h>
 using namespace std;
 
-int precedence(char op) {
-    if (op == '(') return 0;
-    if (op == '+' || op == '-') return 1;
-    if (op == '*' || op == '/') return 2;
-    return 3; // '^' 연산자 (우선순위가 가장 높음)
-}
-
-string infixToPostfix(const string& infix) {
-    string postfix = "";
-    stack<char> s;
-
-    for (char ch : infix) {
-        if (isalpha(ch)) {
-            postfix += ch; // 피연산자는 그대로 출력
-        } else if (ch == '(') {
-            s.push(ch); // 여는 괄호는 스택에 push
-        } else if (ch == ')') {
-            while (!s.empty() && s.top() != '(') {
-                postfix += s.top();
-                s.pop();
-            }
-            s.pop(); // 여는 괄호는 pop하여 무시
-        } else { // 연산자인 경우
-            while (!s.empty() && precedence(s.top()) >= precedence(ch)) {
-                postfix += s.top();
-                s.pop();
-            }
-            s.push(ch);
-        }
-    }
-
-    while (!s.empty()) {
-        postfix += s.top();
-        s.pop();
-    }
-
-    return postfix;
+int solve(char c) {
+    if (c=='(') return 0;
+    if (c=='+'||c=='-') return 1;
+    if (c=='*'||c=='/') return 2;
+    return -1;
 }
 
 int main() {
-    string infix;
-    cin >> infix;
+    cin.tie(0)->sync_with_stdio(0);
 
-    string postfix = infixToPostfix(infix);
-    cout << postfix << endl;
+    string s;
+    cin>>s;
+    stack<char>st;
 
-    return 0;
+    for (char c:s) {
+        if (isalpha(c)) {
+            cout<<c;
+        }
+        else if (c=='(') st.push(c);
+        else if (c==')') {
+            while (st.top()!='(') {
+                cout<<st.top();
+                st.pop();
+            }
+            st.pop();
+        }else {
+            while (!st.empty()&&solve(st.top())>=solve(c)) {
+                cout<<st.top();
+                st.pop();
+            }
+            st.push(c);
+        }
+    }
+    while (!st.empty()) {
+        cout<<st.top();
+        st.pop();
+    }
 }
