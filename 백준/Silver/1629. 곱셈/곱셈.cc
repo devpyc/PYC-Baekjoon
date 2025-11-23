@@ -1,29 +1,18 @@
-#include <iostream>
-
+#include <bits/stdc++.h>
+#define ll long long
 using namespace std;
 
-long long power(int A, int B, int C) {
-    if (B == 0) {
-        return 1;
-    }
-
-    long long halfPower = power(A, B / 2, C);
-    long long result = (halfPower * halfPower) % C;
-
-    if (B % 2 == 1) {
-        return (result * A) % C;
-    } else {
-        return result;
-    }
+ll a,b,c;
+ll llpow(ll a, ll b) {
+    if (b==0) return 1;
+    ll res=llpow(a,b/2),ans=(res*res)%c;
+    if (b%2==1) ans=(ans*a)%c;
+    return ans;
 }
 
 int main() {
-    int A, B, C;
-    cin >> A >> B >> C;
+    cin.tie(0)->sync_with_stdio(0);
 
-    long long result = power(A, B, C);
-
-    cout << result << endl;
-
-    return 0;
+    cin>>a>>b>>c;
+    cout<<llpow(a%c,b);
 }
