@@ -1,41 +1,27 @@
-#include <iostream>
-#include <vector>
-#include <cmath>
-
+#include<bits/stdc++.h>
 using namespace std;
 
-struct Point {
-    long long x, y;
+struct Point{
+    long long x,y;
 };
 
-double calculateArea(const vector<Point>& polygon) {
-    int n = polygon.size();
-    double area = 0;
-
-    for (int i = 0; i < n; ++i) {
-        int next = (i + 1) % n;
-        area += (polygon[i].x * polygon[next].y - polygon[next].x * polygon[i].y);
-    }
-
-    area = abs(area) / 2.0;
-    return area;
-}
-
 int main() {
+    cin.tie(0)->sync_with_stdio(0);
+
     int n;
-    cin >> n;
+    cin>>n;
 
-    vector<Point> polygon(n);
-
-    for (int i = 0; i < n; ++i) {
-        cin >> polygon[i].x >> polygon[i].y;
+    vector<Point>arr(n);
+    for (int i=0; i<n; i++) {
+        cin>>arr[i].x>>arr[i].y;
     }
 
-    double result = calculateArea(polygon);
-
-    cout << fixed;
+    long double ans=0;
+    for (int i=0; i<n; i++) {
+        int j=(i+1)%n;
+        ans+=(long double)arr[i].x*arr[j].y-(long double)arr[j].x*arr[i].y;
+    }
+    cout<<fixed;
     cout.precision(1);
-    cout << result << endl;
-
-    return 0;
+    cout<<abs(ans)/2.0;
 }
