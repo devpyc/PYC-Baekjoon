@@ -1,52 +1,42 @@
-#include <iostream>
-#include <vector>
-
+#include <bits/stdc++.h>
 using namespace std;
 
-// 유니온 파인드(Union-Find) 자료구조 구현
-struct UnionFind {
-    vector<int> parent;
+vector<int>parent;
 
-    UnionFind(int n) {
-        parent.resize(n + 1);
-        for (int i = 0; i <= n; ++i) {
-            parent[i] = i;
-        }
-    }
+int find(int x) {
+    if (parent[x]==x) return x;
+    else return parent[x]=find(parent[x]);
+}
 
-    // 루트 노드 찾기
-    int find(int u) {
-        if (u == parent[u]) return u;
-        return parent[u] = find(parent[u]);
-    }
+void merge(int x, int y) {
+    x=find(x);
+    y=find(y);
+    if (x!=y) parent[x]=y;
+}
 
-    // 두 노드를 하나의 집합으로 합치기
-    void unionNodes(int u, int v) {
-        u = find(u);
-        v = find(v);
-        parent[u] = v;
-    }
-};
+bool same(int x, int y) {
+    return find(x)==find(y);
+}
 
 int main() {
-    int G, P;
-    cin >> G >> P;
+    cin.tie(0)->sync_with_stdio(0);
 
-    UnionFind uf(G);
+    int g,p;
+    cin>>g>>p;
 
-    int ans = 0;
-    for (int i = 0; i < P; ++i) {
-        int gate;
-        cin >> gate;
+    parent.resize(g+1);
+    for (int i=1; i<=g; i++) {
+        parent[i]=i;
+    }
 
-        int root = uf.find(gate);
-
-        if (root == 0) break;  // 루트가 0이면 더 이상 도킹할 게이트가 없음
-
-        uf.unionNodes(root, root - 1);
+    int ans=0;
+    while (p--) {
+        int x;
+        cin>>x;
+        int i=find(x);
+        if (i==0) break;
+        merge(i,i-1);
         ans++;
     }
-    cout << ans << '\n';
-
-    return 0;
+    cout<<ans;
 }
