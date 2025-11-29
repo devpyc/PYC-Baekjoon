@@ -1,18 +1,6 @@
 #include <iostream>
-using namespace std;
-
-int main(){
-  int x, y;
-  cin>>x>>y;
-
-  if(x > 0)
-    if(y > 0)
-      cout<<1;
-    else
-      cout<<4;
-  else
-    if(y > 0)
-      cout<<2;
-    else
-      cout<<3;      
+int main() {
+    int a,b;
+    std::cin>>a>>b;
+    std::cout<<(a>0&&b>0?1:(a<0&&b>0?2:(a<0&&b<0?3:4)));
 }
