@@ -8,7 +8,7 @@ int find(int x) {
     else return parent[x]=find(parent[x]);
 }
 
-void unite(int x, int y) {
+void merge(int x, int y) {
     x=find(x);
     y=find(y);
     if (x!=y) parent[y]=x;
@@ -21,7 +21,7 @@ bool same(int x, int y) {
 class Edge {
 public:
     int u,v,w;
-    Edge(int u, int v, int w) :u(u),v(v),w(w){}
+    Edge(int u, int v, int w):u(u),v(v),w(w){}
     bool operator<(const Edge &edge) const {
         return w<edge.w;
     }
@@ -37,7 +37,6 @@ int main() {
     for (int i=1; i<=n; i++) {
         parent[i]=i;
     }
-
     vector<Edge>arr;
 
     while (m--) {
@@ -47,13 +46,13 @@ int main() {
     }
 
     sort(arr.begin(),arr.end());
-    int ans=0,cnt=0;
-    for (auto i:arr) {
+
+    int ans=0;
+    for (auto &i: arr) {
         if (!same(i.u,i.v)) {
-            unite(i.u,i.v);
-            ans+=i.w;
-            cnt=max(cnt,i.w);
+            merge(i.u,i.v);
+            ans=max(ans,i.w);
         }
     }
-    cout<<cnt;
+    cout<<ans;
 }
