@@ -1,77 +1,35 @@
 #include <bits/stdc++.h>
-#define int long long
-#define endl "\n"
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
 using namespace std;
+using namespace __gnu_pbds;
 
-const int MAX_VAL = 65536;
+typedef tree<pair<int,int>,null_type,less<pair<int,int>>,rb_tree_tag,tree_order_statistics_node_update>ordered_multiset;
 
-class FenwickTree {
-private:
-    vector<int> tree;
-    int size;
+int main() {
+    cin.tie(0)->sync_with_stdio(0);
 
-public:
-    FenwickTree(int n) : size(n) {
-        tree.resize(n + 1, 0);
+    int n,k;
+    cin>>n>>k;
+    vector<int>arr(n);
+    for (int i=0; i<n; i++) {
+        cin>>arr[i];
     }
 
-    void update(int index, int delta) {
-        while (index <= size) {
-            tree[index] += delta;
-            index += index & -index;
-        }
+    ordered_multiset s;
+    long long ans=0;
+
+    for (int i=0; i<k; i++) {
+        s.insert({arr[i],i});
     }
 
-    int query(int index) {
-        int sum = 0;
-        while (index > 0) {
-            sum += tree[index];
-            index -= index & -index;
-        }
-        return sum;
+    int mid=(k-1)/2;
+    ans+=s.find_by_order(mid)->first;
+
+    for (int i=k; i<n; i++) {
+        s.erase({arr[i-k],i-k});
+        s.insert({arr[i],i});
+        ans+=s.find_by_order(mid)->first;
     }
-
-    int findKth(int k) {
-        int left = 1;
-        int right = size;
-        while (left < right) {
-            int mid = (left + right) / 2;
-            if (query(mid) >= k) {
-                right = mid;
-            } else {
-                left = mid + 1;
-            }
-        }
-        return left;
-    }
-};
-
-int32_t main() {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-
-    int N, K;
-    cin >> N >> K;
-
-    vector<int> temperatures(N);
-    for (int i = 0; i < N; ++i) {
-        cin >> temperatures[i];
-    }
-
-    FenwickTree fenwickTree(MAX_VAL);
-    long long sumOfMedians = 0;
-
-    for (int i = 0; i < K - 1; ++i) {
-        fenwickTree.update(temperatures[i] + 1, 1);
-    }
-
-    for (int i = K - 1; i < N; ++i) {
-        fenwickTree.update(temperatures[i] + 1, 1);
-        int median = fenwickTree.findKth((K + 1) / 2) - 1;
-        sumOfMedians += median;
-        fenwickTree.update(temperatures[i - K + 1] + 1, -1);
-    }
-
-    cout << sumOfMedians << endl;
-    return 0;
+    cout<<ans;
 }
