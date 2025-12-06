@@ -1,75 +1,28 @@
 #include <bits/stdc++.h>
-#define ll long long
-#define fi first
-#define se second
-#define pb push_back
-#define pi pair<int, int>
-#define mi map<int, int>
-#define qi queue<int>
-#define vi vector<int>
-#define vvi vector<vector<int>>
-#define tiii tuple<int,int,int>
-#define endl "\n"
-#define io ios_base::sync_with_stdio(false); cin.tie(nullptr);
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
 using namespace std;
+using namespace __gnu_pbds;
 
-const int MAX = 2000000;
-
-class SegmentTree {
-public:
-    SegmentTree(int n) : n(n) {
-        tree.resize(4 * n, 0);
-    }
-
-    void update(int pos, int val, int node = 1, int start = 0, int end = MAX) {
-        if (start == end) {
-            tree[node] += val;
-        } else {
-            int mid = (start + end) / 2;
-            if (pos <= mid) {
-                update(pos, val, 2 * node, start, mid);
-            } else {
-                update(pos, val, 2 * node + 1, mid + 1, end);
-            }
-            tree[node] = tree[2 * node] + tree[2 * node + 1];
-        }
-    }
-
-    int query(int k, int node = 1, int start = 0, int end = MAX) {
-        if (start == end) {
-            return start;
-        }
-        int mid = (start + end) / 2;
-        if (tree[2 * node] >= k) {
-            return query(k, 2 * node, start, mid);
-        } else {
-            return query(k - tree[2 * node], 2 * node + 1, mid + 1, end);
-        }
-    }
-
-private:
-    vi tree;
-    int n;
-};
+typedef tree<pair<int,int>,null_type,less<pair<int,int>>,rb_tree_tag,tree_order_statistics_node_update>ordered_multiset;
 
 int main() {
-    io;
-    int N;
-    cin >> N;
+    cin.tie(0)->sync_with_stdio(0);
 
-    SegmentTree segTree(MAX + 1);
+    int n;
+    cin>>n;
 
-    for (int i = 0; i < N; ++i) {
-        int T, X;
-        cin >> T >> X;
-        if (T == 1) {
-            segTree.update(X, 1);
-        } else if (T == 2) {
-            int result = segTree.query(X);
-            cout << result << endl;
-            segTree.update(result, -1);
+    ordered_multiset s;
+
+    int cnt=0;
+    while (n--) {
+        int a,b;
+        cin>>a>>b;
+        if (a==1) s.insert({b,cnt++});
+        else {
+            auto it=s.find_by_order(b-1);
+            cout<<it->first<<"\n";
+            s.erase(it);
         }
     }
-
-    return 0;
 }
