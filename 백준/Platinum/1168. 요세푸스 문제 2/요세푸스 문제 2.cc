@@ -1,92 +1,35 @@
 #include <bits/stdc++.h>
-#define int long long
-#define endl "\n"
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
 using namespace std;
+using namespace __gnu_pbds;
 
-class SegmentTree {
-public:
-    SegmentTree(int n) : n(n) {
-        tree.resize(4 * n);
-        build(1, 0, n - 1);
+typedef tree<int,null_type,less<int>,rb_tree_tag,tree_order_statistics_node_update>ordered_set;
+
+int main() {
+    cin.tie(0)->sync_with_stdio(0);
+
+    int n,k;
+    cin>>n>>k;
+    ordered_set s;
+    for (int i=1; i<=n; i++) {
+        s.insert(i);
     }
 
-    void update(int idx, int value) {
-        update(1, 0, n - 1, idx, value);
+    int idx=0;
+    vector<int>ans;
+    while (!s.empty()) {
+        idx=(idx+k-1)%s.size();
+        auto it=s.find_by_order(idx);
+        ans.push_back(*it);
+        s.erase(it);
     }
-
-    int query(int k) {
-        return query(1, 0, n - 1, k);
-    }
-
-private:
-    int n;
-    vector<int> tree;
-
-    void build(int node, int start, int end) {
-        if (start == end) {
-            tree[node] = 1;
-        } else {
-            int mid = (start + end) / 2;
-            build(2 * node, start, mid);
-            build(2 * node + 1, mid + 1, end);
-            tree[node] = tree[2 * node] + tree[2 * node + 1];
+    cout<<"<";
+    for (int i=0; i<ans.size(); i++) {
+        cout<<ans[i];
+        if (i+1<ans.size()) {
+            cout<<", ";
         }
     }
-
-    void update(int node, int start, int end, int idx, int value) {
-        if (start == end) {
-            tree[node] = value;
-        } else {
-            int mid = (start + end) / 2;
-            if (start <= idx && idx <= mid) {
-                update(2 * node, start, mid, idx, value);
-            } else {
-                update(2 * node + 1, mid + 1, end, idx, value);
-            }
-            tree[node] = tree[2 * node] + tree[2 * node + 1];
-        }
-    }
-
-    int query(int node, int start, int end, int k) {
-        if (start == end) {
-            return start;
-        }
-        int mid = (start + end) / 2;
-        if (tree[2 * node] >= k) {
-            return query(2 * node, start, mid, k);
-        } else {
-            return query(2 * node + 1, mid + 1, end, k - tree[2 * node]);
-        }
-    }
-};
-
-int32_t main() {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-
-    int N, K;
-    cin >> N >> K;
-
-    SegmentTree segTree(N);
-    vector<int> result;
-    int current_pos = 0;
-
-    for (int i = 0; i < N; ++i) {
-        int remaining = N - i;
-        current_pos = (current_pos + K - 1) % remaining;
-        int person = segTree.query(current_pos + 1);
-        result.push_back(person + 1);
-        segTree.update(person, 0);
-    }
-
-    cout << "<";
-    for (size_t i = 0; i < result.size(); ++i) {
-        cout << result[i];
-        if (i < result.size() - 1) {
-            cout << ", ";
-        }
-    }
-    cout << ">" << endl;
-
-    return 0;
+    cout<<">";
 }
