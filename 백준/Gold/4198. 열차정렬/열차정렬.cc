@@ -1,0 +1,39 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int LIS(vector<int>&arr) {
+    vector<int>lis;
+    for (int i:arr) {
+        auto it=lower_bound(lis.begin(),lis.end(),i);
+        if (it==lis.end()) lis.push_back(i);
+        else *it=i;
+    }
+    return lis.size();
+}
+
+int main() {
+    cin.tie(0)->sync_with_stdio(0);
+
+    int n;
+    cin>>n;
+
+    vector<int>arr(n);
+    for (int i=0; i<n; i++) {
+        cin>>arr[i];
+    }
+    int ans=0;
+
+    for (int i=0; i<n; i++) {
+        vector<int>left,right;
+        for (int j=i; j<n; j++) {
+            if (arr[j]>arr[i]) {
+                left.push_back(arr[j]);
+            }else if (arr[j]<arr[i]) {
+                right.push_back(-arr[j]);
+            }
+        }
+        int res=LIS(left)+LIS(right)+1;
+        ans=max(ans,res);
+    }
+    cout<<ans;
+}
