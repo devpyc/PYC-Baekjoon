@@ -6,11 +6,15 @@ int main() {
 
     int n;
     cin>>n;
-    long long sum=0;
-    while (n--){
-        long long x;
-        cin>>x;
-        sum^=x;
+
+    vector<int>arr(n);
+    for (int i=0; i<n; i++) {
+        cin>>arr[i];
     }
-    cout<<(sum!=0?"koosaga":"cubelover");
+    int ans=0;
+
+    for (int i:arr) {
+        ans^=i;
+    }
+    cout<<(ans!=0?"koosaga":"cubelover");
 }
